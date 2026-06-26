@@ -27,8 +27,8 @@ export default function Privacy() {
       </p>
       <h2>Processors</h2>
       <p>
-        Vercel (hosting), Neon/Supabase (database), Clerk (authentication), Resend (email), Twilio
-        (SMS), Calendly (booking), Meta and Google (advertising/analytics, consent-gated).
+        Vercel (hosting), GoHighLevel (CRM, pipeline and nurture email/SMS — the system of record
+        for your enquiry), Calendly (booking), Meta and Google (advertising/analytics, consent-gated).
       </p>
       <h2>Retention</h2>
       <p>‹FILL› retention periods per data category.</p>

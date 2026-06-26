@@ -1,18 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'node:crypto';
 import { leadSchema } from '@/lib/validators';
-import { scoreLead } from '@/lib/scoring';
 import { rateLimit } from '@/lib/rate-limit';
-import { sendEmail, sendSms, sendMetaCapiEvent } from '@/lib/integrations';
+import { sendMetaCapiEvent } from '@/lib/meta-capi';
+import { pushLeadToGHL, toGHLPayload } from '@/lib/ghl';
 
 /*
- * Public lead-capture endpoint (BUILD_SPEC §7). Validates → persists → enriches
- * → scores → fires conversion events → triggers nurture. Persistence is guarded
- * so the route works without a live DB (returns success, logs intent).
+ * Public lead-capture endpoint (thin backend).
+ *   validate (zod + honeypot) → rate-limit → consent-gate conversion →
+ *   fire Meta CAPI → push lead to GHL (system of record) → return success.
+ * GHL workflows then own nurture (SMS + email), pipeline and reminders.
+ * A GHL failure never blocks the visitor — the lead is logged for recovery.
  */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const ua = req.headers.get('user-agent') ?? undefined;
+  const policyVersion = process.env.POLICY_VERSION ?? 'unversioned';
 
   const limit = rateLimit(`lead:${ip}`, 5, 60_000);
   if (!limit.ok) {
@@ -41,52 +44,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const { score, grade } = scoreLead(data);
   const eventId = randomUUID();
 
-  // Persist (best-effort; never block the user if the DB is unavailable).
-  try {
-    const { prisma } = await import('@/lib/prisma');
-    await prisma.lead.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        business: data.business || null,
-        jobsPerMonth: data.jobsPerMonth ?? null,
-        market: data.market ?? null,
-        source: data.source ?? 'meta',
-        fbclid: data.fbclid ?? null,
-        utm: data.utm ?? undefined,
-        score,
-        grade,
-        consent: { marketing: Boolean(data.consentMarketing), ip, ts: new Date().toISOString() },
-      },
+  // Fire server-side conversion only with marketing consent (deduped with the
+  // Pixel via eventId). Consent is captured client-side and forwarded here.
+  if (data.consentMarketing) {
+    await sendMetaCapiEvent({
+      eventName: 'Lead',
+      eventId,
+      email: data.email,
+      phone: data.phone,
+      fbclid: data.fbclid,
+      clientIp: ip,
+      userAgent: ua,
     });
-  } catch (err) {
-    console.error('[lead] persistence skipped/failed:', (err as Error).message);
   }
 
-  // Fire server-side conversion (deduped with the Pixel via eventId).
-  await sendMetaCapiEvent({
-    eventName: 'Lead',
-    eventId,
-    email: data.email,
-    phone: data.phone,
-    fbclid: data.fbclid,
-    clientIp: ip,
-    userAgent: ua,
-  });
+  // Hand the lead to GHL. Consent + attribution travel as custom fields so GHL
+  // remains the auditable record. Never block the visitor on failure.
+  const ghl = await pushLeadToGHL(toGHLPayload(data, { ip, policyVersion }));
 
-  // Immediate nurture — confirmation email + SMS (no-op without keys).
-  await Promise.allSettled([
-    sendEmail({
-      to: data.email,
-      subject: 'Your Solardapt strategy call',
-      html: `<p>Hi ${data.name}, thanks for reaching out. We'll be in touch shortly to confirm your free strategy call.</p>`,
-    }),
-    sendSms({ to: data.phone, body: 'Solardapt: thanks! We will text to confirm your strategy call shortly.' }),
-  ]);
-
-  return NextResponse.json({ ok: true, eventId, score, grade });
+  return NextResponse.json({ ok: true, eventId, forwarded: ghl.ok });
 }

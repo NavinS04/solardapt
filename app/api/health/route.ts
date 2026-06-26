@@ -2,18 +2,20 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-// Uptime-friendly health probe (BUILD_SPEC §11). Reports DB connectivity when
-// configured, but stays green for the static/no-DB case.
+/*
+ * Uptime-friendly health probe. The backend is stateless (no datastore) — it
+ * validates, fires conversion events and hands leads to GHL — so this simply
+ * confirms the app is serving and whether the GHL handoff is configured.
+ */
 export async function GET() {
-  let db: 'ok' | 'unconfigured' | 'error' = 'unconfigured';
-  if (process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('localhost')) {
-    try {
-      const { prisma } = await import('@/lib/prisma');
-      await prisma.$queryRaw`SELECT 1`;
-      db = 'ok';
-    } catch {
-      db = 'error';
-    }
-  }
-  return NextResponse.json({ status: 'ok', db, ts: new Date().toISOString() });
+  const ghl =
+    process.env.GHL_MODE === 'api'
+      ? process.env.GHL_API_KEY
+        ? 'configured'
+        : 'unconfigured'
+      : process.env.GHL_INBOUND_WEBHOOK_URL
+        ? 'configured'
+        : 'unconfigured';
+
+  return NextResponse.json({ status: 'ok', ghl, ts: new Date().toISOString() });
 }

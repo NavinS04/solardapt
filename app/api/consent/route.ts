@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 /*
- * Logs a consent decision to ConsentRecord with timestamp, scope, IP and policy
- * version (BUILD_SPEC §10). Guarded so it succeeds without a live DB.
+ * Consent audit log. We must record consent (timestamp, scope, IP, policy
+ * version) before any tracker fires, even though lead data itself lives in GHL.
+ * This writes a structured, greppable audit line — serverless-friendly and
+ * captured by the host's log drain / Sentry breadcrumbs. Lead-level consent is
+ * additionally forwarded into GHL as custom fields on submit (see lib/ghl.ts).
  */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
@@ -15,20 +18,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
   }
 
-  const subject = `anon:${ip}`;
-  try {
-    const { prisma } = await import('@/lib/prisma');
-    await prisma.$transaction([
-      prisma.consentRecord.create({
-        data: { subject, purpose: 'analytics', value: Boolean(body.analytics), ip, policyVersion },
-      }),
-      prisma.consentRecord.create({
-        data: { subject, purpose: 'marketing', value: Boolean(body.marketing), ip, policyVersion },
-      }),
-    ]);
-  } catch (err) {
-    console.error('[consent] log skipped/failed:', (err as Error).message);
-  }
+  // Structured audit record — keep the tag stable for log queries.
+  console.info(
+    'CONSENT_AUDIT',
+    JSON.stringify({
+      subject: `anon:${ip}`,
+      analytics: Boolean(body.analytics),
+      marketing: Boolean(body.marketing),
+      ip,
+      policyVersion,
+      ts: new Date().toISOString(),
+    }),
+  );
 
   return NextResponse.json({ ok: true });
 }

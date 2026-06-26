@@ -16,15 +16,18 @@ states until real data arrives.
 ## Brand assets (`/public/brand`)
 - [ ] `solardapt-logo.png`, `og.png`, `vsl-poster.jpg`
 
-## Integrations (env)
-- [ ] Calendly account + event link (`NEXT_PUBLIC_CALENDLY_URL`, `CALENDLY_WEBHOOK_SECRET`)
+## GoHighLevel (the backend)
+- [ ] `GHL_INBOUND_WEBHOOK_URL` — create an Inbound Webhook trigger in a GHL Workflow
+- [ ] Map incoming fields → GHL contact fields (see README / RUNBOOK)
+- [ ] Build nurture (SMS + email), pipeline and reminder workflows in GHL
+- [ ] Configure the **Calendly ↔ GHL** sync inside GHL
+- [ ] Complete **A2P 10DLC** (SMS) and **email domain authentication** inside GHL
+
+## Booking & tracking (env)
+- [ ] Calendly event link (`NEXT_PUBLIC_CALENDLY_URL`)
 - [ ] Meta Pixel ID + CAPI token + dataset ID
 - [ ] GA4 measurement ID + GTM container ID
-- [ ] Resend domain + API key
-- [ ] Twilio number + credentials
-- [ ] Clerk publishable + secret keys
-- [ ] Postgres (`DATABASE_URL`) + Upstash Redis URLs
-- [ ] Sentry DSN
+- [ ] Sentry DSN (optional, recommended)
 
 ## Legal & config
 - [ ] Legal entity details for policies (controller, address, company number)
