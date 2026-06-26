@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../styles/tokens.css';
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg-1 text-foreground antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--solar-500);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--solar-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+  }
+
+  .text-gradient {
+    background: var(--solar-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* The signature sunrise arc — reused as a section divider / accent. */
+  .sun-arc {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--solar-400),
+      var(--solar-500),
+      var(--solar-600),
+      transparent
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Mesh gradient + grain backdrop for dark scenes. */
+  .mesh-bg {
+    background-image:
+      radial-gradient(40% 50% at 50% 0%, rgba(248, 152, 24, 0.18), transparent 70%),
+      radial-gradient(30% 40% at 85% 20%, rgba(251, 176, 74, 0.1), transparent 70%),
+      radial-gradient(40% 50% at 10% 80%, rgba(240, 128, 0, 0.08), transparent 70%);
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Respect reduced motion globally as a safety net. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

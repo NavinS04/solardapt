@@ -1,0 +1,227 @@
+// Solardapt data model — see docs/ARCHITECTURE.md for the full ERD.
+// Extend as the CRM grows. PII columns are consent-gated (see ConsentRecord).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  staff
+  viewer
+}
+
+enum LeadStage {
+  NEW
+  CONTACTED
+  BOOKED
+  SHOWED
+  WON
+  LOST
+}
+
+enum Market {
+  UK
+  USA
+  AUSTRALIA
+  MIDDLE_EAST
+}
+
+enum Channel {
+  EMAIL
+  SMS
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String?  @unique
+  email     String   @unique
+  name      String?
+  role      Role     @default(viewer)
+  leads     Lead[]   @relation("LeadOwner")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id            String      @id @default(cuid())
+  name          String
+  email         String
+  phone         String?
+  business      String?
+  jobsPerMonth  Int?
+  market        Market?
+  source        String?
+  fbclid        String?
+  utm           Json?
+  score         Int         @default(0)
+  grade         String?
+  stage         LeadStage   @default(NEW)
+  owner         User?       @relation("LeadOwner", fields: [ownerId], references: [id])
+  ownerId       String?
+  consent       Json?
+  activities    Activity[]
+  appointments  Appointment[]
+  enrollments   Enrollment[]
+  messageLogs   MessageLog[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([stage])
+  @@index([market])
+  @@index([email])
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId    String
+  type      String
+  payload   Json?
+  actor     String?
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+}
+
+model Appointment {
+  id         String   @id @default(cuid())
+  lead       Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId     String
+  calendlyId String?  @unique
+  start      DateTime?
+  status     String   @default("scheduled")
+  outcome    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([leadId])
+}
+
+model Sequence {
+  id        String         @id @default(cuid())
+  name      String
+  active    Boolean        @default(true)
+  steps     SequenceStep[]
+  enrollments Enrollment[]
+  createdAt DateTime       @default(now())
+}
+
+model SequenceStep {
+  id         String   @id @default(cuid())
+  sequence   Sequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  sequenceId String
+  order      Int
+  channel    Channel
+  templateId String?
+  delayHours Int      @default(0)
+
+  @@index([sequenceId])
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  sequence   Sequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  sequenceId String
+  lead       Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId     String
+  stepCursor Int      @default(0)
+  status     String   @default("active")
+  createdAt  DateTime @default(now())
+
+  @@index([leadId])
+  @@index([sequenceId])
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  channel   Channel
+  subject   String?
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MessageLog {
+  id         String   @id @default(cuid())
+  lead       Lead?    @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  leadId     String?
+  channel    Channel
+  templateId String?
+  status     String
+  providerId String?
+  createdAt  DateTime @default(now())
+
+  @@index([leadId])
+}
+
+model Content {
+  id        String   @id @default(cuid())
+  key       String
+  locale    String   @default("en")
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, locale])
+}
+
+model ConsentRecord {
+  id            String   @id @default(cuid())
+  subject       String
+  purpose       String
+  value         Boolean
+  ip            String?
+  policyVersion String?
+  createdAt     DateTime @default(now())
+
+  @@index([subject])
+}
+
+model DataRequest {
+  id        String   @id @default(cuid())
+  type      String // export | delete
+  subject   String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actor     String?
+  entity    String
+  entityId  String?
+  action    String
+  before    Json?
+  after     Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity])
+}
+
+model WebhookEvent {
+  id             String   @id @default(cuid())
+  source         String
+  idempotencyKey String   @unique
+  status         String   @default("received")
+  payload        Json?
+  createdAt      DateTime @default(now())
+}
+
+model Job {
+  id        String   @id @default(cuid())
+  type      String
+  runAt     DateTime
+  attempts  Int      @default(0)
+  status    String   @default("pending")
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([status, runAt])
+}

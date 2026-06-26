@@ -1,0 +1,59 @@
+/*
+ * Solardapt design tokens — single source of truth for colour, depth & motion.
+ * Brand colours are taken directly from the logo (BUILD_SPEC §4). Do not invent
+ * new hex values; reference these variables everywhere.
+ */
+:root {
+  /* Solar (the sun) */
+  --solar-500: #f89818; /* primary orange */
+  --solar-600: #f08000; /* deep orange */
+  --solar-400: #fbb04a; /* light amber */
+  --solar-gradient: linear-gradient(135deg, #fbb04a 0%, #f89818 45%, #f08000 100%);
+
+  /* Slate (the wordmark) */
+  --ink-900: #1b2026;
+  --ink-800: #283038;
+  --ink-700: #384048;
+  --ink-500: #6b7480;
+
+  /* Canvas */
+  --bg-0: #0b0e12;
+  --bg-1: #11151b;
+  --bg-surface: #161b22;
+  --paper: #ffffff;
+  --paper-soft: #f6f7f9;
+
+  /* Semantic */
+  --success: #2fbf71;
+  --warn: #f5a524;
+  --error: #e5484d;
+
+  /* Derived UI tokens (shadcn-style) */
+  --foreground: #eef1f5;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #9aa4b2;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: var(--solar-500);
+
+  /* Glass recipe */
+  --glass-bg: rgba(22, 27, 34, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 20px;
+
+  /* Motion tokens (mirror lib/motion.ts) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.3s;
+  --dur-base: 0.6s;
+  --dur-slow: 1.1s;
+}
+
+/* Light "paper" sections opt in by adding .theme-paper */
+.theme-paper {
+  --foreground: var(--ink-900);
+  --muted-foreground: var(--ink-500);
+  --border: rgba(27, 32, 38, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(27, 32, 38, 0.08);
+}
