@@ -21,7 +21,8 @@ export interface GHLWebhookBody {
   email: string;
   phone: string;
   business?: string;
-  jobs_per_month?: number;
+  // Sent as a string to match GHL's confirmed webhook field types (e.g. "8").
+  jobs_per_month?: string;
   market?: string;
   source?: string;
   utm_source?: string;
@@ -30,7 +31,8 @@ export interface GHLWebhookBody {
   utm_content?: string;
   utm_term?: string;
   fbclid?: string;
-  consent_given: boolean;
+  // Sent as a string ("true" / "false") to match GHL's confirmed webhook types.
+  consent_given: string;
   consent_timestamp: string;
   // Additional audit context (forwarded for compliance; GHL ignores any field
   // not mapped on the trigger).
@@ -71,7 +73,7 @@ export function toGHLPayload(
     email: data.email,
     phone: data.phone,
     business: data.business || undefined,
-    jobs_per_month: data.jobsPerMonth,
+    jobs_per_month: data.jobsPerMonth !== undefined ? String(data.jobsPerMonth) : undefined,
     market: data.market,
     source: data.source ?? 'meta',
     utm_source: utm.utm_source,
@@ -80,7 +82,7 @@ export function toGHLPayload(
     utm_content: utm.utm_content,
     utm_term: utm.utm_term,
     fbclid: data.fbclid,
-    consent_given: Boolean(data.consentMarketing),
+    consent_given: String(Boolean(data.consentMarketing)),
     consent_timestamp: new Date().toISOString(),
     consent_ip: meta.ip,
     consent_policy_version: meta.policyVersion,

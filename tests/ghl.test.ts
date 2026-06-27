@@ -34,7 +34,7 @@ describe('toGHLPayload', () => {
     expect(p.last_name).toBe('Whitmore');
     expect(p.email).toBe('daniel@brightroofsolar.co.uk');
     expect(p.phone).toBe('+447700900123');
-    expect(p.jobs_per_month).toBe(12);
+    expect(p.jobs_per_month).toBe('12');
     expect(p.market).toBe('UK');
     expect(p.source).toBe('meta');
   });
@@ -49,7 +49,7 @@ describe('toGHLPayload', () => {
 
   it('forwards consent as consent_given + consent_timestamp (auditable)', () => {
     const p = toGHLPayload(base, { ip: '1.2.3.4', policyVersion: '2026-06-01' });
-    expect(p.consent_given).toBe(true);
+    expect(p.consent_given).toBe('true');
     expect(typeof p.consent_timestamp).toBe('string');
     expect(Number.isNaN(Date.parse(p.consent_timestamp))).toBe(false);
     expect(p.consent_ip).toBe('1.2.3.4');
@@ -58,7 +58,7 @@ describe('toGHLPayload', () => {
 
   it('sets consent_given false without marketing consent', () => {
     const p = toGHLPayload({ ...base, consentMarketing: false }, { ip: 'x', policyVersion: 'v' });
-    expect(p.consent_given).toBe(false);
+    expect(p.consent_given).toBe('false');
   });
 
   it('drops empty business to undefined', () => {
