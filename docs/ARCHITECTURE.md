@@ -33,8 +33,10 @@ Visitor (Meta, UTM + fbclid)
   → POST /api/lead
      → zod validate + honeypot + rate-limit
      → if marketing consent: Meta CAPI Lead event (hashed PII, event_id dedupe)
-     → pushLeadToGHL()  →  GHL inbound webhook  (name, email, phone, business,
-                            jobsPerMonth, market, source, utm_*, fbclid, consent_*)
+     → pushLeadToGHL()  →  GHL inbound webhook  (first_name, last_name, email,
+                            phone, business, jobs_per_month, market, source,
+                            utm_source/medium/campaign, fbclid, consent_given,
+                            consent_timestamp)
      → return { ok, eventId, forwarded }       (never blocks on GHL failure)
   → /thank-you (client-side conversion, consent-gated)
 

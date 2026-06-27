@@ -18,9 +18,11 @@ npm i && npm run dev
 
 1. **Inbound webhook:** create a GHL Workflow with an *Inbound Webhook* trigger;
    put its URL in `GHL_INBOUND_WEBHOOK_URL`. Map incoming fields → contact
-   fields: `name`, `email`, `phone`, `business`, `jobsPerMonth`, `market`,
-   `source`, `fbclid`, `utm_*`, and consent fields (`consent_marketing`,
-   `consent_ts`, `consent_ip`, `consent_policy_version`).
+   fields (exact keys): `first_name`, `last_name`, `email`, `phone`, `business`,
+   `jobs_per_month`, `market`, `source`, `utm_source`, `utm_medium`,
+   `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `consent_given`,
+   `consent_timestamp`, `consent_ip`, `consent_policy_version`. The contract is
+   defined by `GHLWebhookBody` in `lib/ghl.ts` — keep this mapping in sync.
 2. **Nurture & pipeline:** build SMS + email sequences, pipeline stages and
    reminders as GHL workflows. None of this lives in the website.
 3. **Calendly ↔ GHL:** connect Calendly inside GHL (native integration /

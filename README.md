@@ -51,10 +51,12 @@ become live once their env vars are supplied.
 
 1. In GHL, create a **Workflow** with an **Inbound Webhook** trigger.
 2. Copy the webhook URL into `GHL_INBOUND_WEBHOOK_URL`.
-3. Map the incoming fields to contact fields — the payload sends: `name`,
-   `email`, `phone`, `business`, `jobsPerMonth`, `market`, `source`, `fbclid`,
-   each `utm_*`, and consent fields (`consent_marketing`, `consent_ts`,
-   `consent_ip`, `consent_policy_version`).
+3. Map the incoming fields to contact fields — the payload sends these exact
+   keys: `first_name`, `last_name`, `email`, `phone`, `business`,
+   `jobs_per_month`, `market`, `source`, `utm_source`, `utm_medium`,
+   `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `consent_given`,
+   `consent_timestamp` (plus `consent_ip` and `consent_policy_version` for
+   audit). These are defined in `GHLWebhookBody` in `lib/ghl.ts`.
 4. Build the nurture/pipeline/reminder workflows in GHL.
 5. Configure the **Calendly ↔ GHL** sync inside GHL (native integration).
 
