@@ -58,7 +58,7 @@ export function WhyCards() {
           {CARDS.map((card, i) => (
             <Reveal key={card.title} delay={i * 0.06}>
               <Tilt className="group h-full">
-                <div className="relative h-full overflow-hidden rounded-md glass p-7 transition-colors duration-300 hover:border-solar-500/40">
+                <div className="glow-border relative h-full rounded-md glass p-7 transition-colors duration-300 hover:border-solar-500/40">
                   <div className="absolute inset-0 -z-10 bg-solar-gradient opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-10" />
                   <div className="mb-5 inline-flex size-12 items-center justify-center rounded-md bg-solar-500/10 text-solar-400">
                     <card.icon className="size-6" />

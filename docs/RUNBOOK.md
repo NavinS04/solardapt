@@ -25,9 +25,33 @@ npm i && npm run dev
    defined by `GHLWebhookBody` in `lib/ghl.ts` — keep this mapping in sync.
 2. **Nurture & pipeline:** build SMS + email sequences, pipeline stages and
    reminders as GHL workflows. None of this lives in the website.
-3. **Calendly ↔ GHL:** connect Calendly inside GHL (native integration /
-   connector) so bookings sync into GHL automatically. The website only hosts the
-   Calendly embed (`NEXT_PUBLIC_CALENDLY_URL`).
+3. **Calendly ↔ GHL (two parts):**
+   - **Contact + automation:** the site hosts a Calendly webhook bridge at
+     `/api/webhooks/calendly`. Create the subscription with a Calendly personal
+     access token:
+
+     ```bash
+     curl -X POST https://api.calendly.com/webhook_subscriptions \
+       -H "Authorization: Bearer $CALENDLY_PAT" -H "Content-Type: application/json" \
+       -d '{
+         "url": "https://solardapt.com/api/webhooks/calendly",
+         "events": ["invitee.created", "invitee.canceled"],
+         "organization": "<your organization URI from GET /users/me>",
+         "scope": "organization"
+       }'
+     ```
+
+     Put the returned `signing_key` in `CALENDLY_WEBHOOK_SIGNING_KEY`. Each
+     booking then lands in GHL (via `GHL_BOOKING_WEBHOOK_URL`, falling back to
+     the main inbound webhook) with phone, message, booking time and
+     `booking_status`, and fires a Meta CAPI `Schedule` event.
+   - **Calendar view sync:** connect the *same Google Calendar* to both tools —
+     Calendly (event type → calendar connection) writes bookings into it, and
+     GHL (Settings → Calendars → Connections) two-way syncs it, so the slot
+     shows and blocks availability in both diaries.
+   - **Invitee questions:** in the Calendly event type, add a required "Phone
+     number" question and a "What would you like to discuss?" question — the
+     bridge picks both up automatically.
 4. **Messaging compliance (in GHL):** complete **A2P 10DLC** registration for
    SMS and **email sender domain authentication** (SPF/DKIM) inside GHL before
    sending nurture. STOP/HELP and unsubscribe are handled by GHL.

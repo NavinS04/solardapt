@@ -31,6 +31,12 @@ export interface GHLWebhookBody {
   utm_content?: string;
   utm_term?: string;
   fbclid?: string;
+  /** Free-text enquiry message from the form or Calendly invitee questions. */
+  message?: string;
+  // Booking metadata forwarded from the Calendly webhook bridge.
+  booking_status?: 'booked' | 'cancelled';
+  booking_start?: string;
+  booking_event?: string;
   // Sent as a string ("true" / "false") to match GHL's confirmed webhook types.
   consent_given: string;
   consent_timestamp: string;
@@ -82,6 +88,7 @@ export function toGHLPayload(
     utm_content: utm.utm_content,
     utm_term: utm.utm_term,
     fbclid: data.fbclid,
+    message: data.message || undefined,
     consent_given: String(Boolean(data.consentMarketing)),
     consent_timestamp: new Date().toISOString(),
     consent_ip: meta.ip,
@@ -101,14 +108,17 @@ function compact(body: GHLWebhookBody): Record<string, unknown> {
  * GHL failure. Retries once with backoff; logs failures for manual recovery
  * (Sentry if configured, else structured console).
  */
-export async function pushLeadToGHL(payload: GHLWebhookBody): Promise<GHLResult> {
+export async function pushLeadToGHL(
+  payload: GHLWebhookBody,
+  opts?: { webhookUrl?: string },
+): Promise<GHLResult> {
   if (mode() === 'api') {
     // TODO: implement GHL API path (GHL_API_KEY + GHL_LOCATION_ID) when ready.
     console.info('[ghl:api:stub] would create contact via GHL API', payload.email);
     return { ok: false, error: 'api mode not implemented' };
   }
 
-  const url = process.env.GHL_INBOUND_WEBHOOK_URL;
+  const url = opts?.webhookUrl || process.env.GHL_INBOUND_WEBHOOK_URL;
   if (!url) {
     console.info('[ghl:noop] GHL_INBOUND_WEBHOOK_URL missing — would push', payload.email);
     return { ok: false, error: 'webhook url not configured' };
