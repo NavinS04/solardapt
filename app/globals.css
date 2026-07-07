@@ -74,6 +74,154 @@
   }
 }
 
+
+/* ─── Immersive scene primitives (hero + accents) ──────────────────────────
+   All animations use transform/opacity/background-position only — no layout
+   work — and every consumer is gated behind the reduced-motion guard. */
+
+@keyframes aurora-drift {
+  0%, 100% { transform: translate3d(-8%, 0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate3d(6%, -6%, 0) scale(1.15) rotate(8deg); }
+  66% { transform: translate3d(-4%, 5%, 0) scale(0.95) rotate(-6deg); }
+}
+
+@keyframes ray-spin {
+  from { transform: translate(-50%, 0) rotate(0deg); }
+  to { transform: translate(-50%, 0) rotate(360deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes grid-flow {
+  from { background-position: 0 0; }
+  to { background-position: 0 42px; }
+}
+
+@keyframes text-sheen {
+  0%, 45% { background-position: 150% 0; }
+  85%, 100% { background-position: -50% 0; }
+}
+
+@keyframes border-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@layer components {
+  /* Soft aurora blobs behind the hero. */
+  .aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    will-change: transform;
+    animation: aurora-drift 18s ease-in-out infinite;
+  }
+
+  /* Volumetric light rays fanning from the sun — a slow conic sweep. */
+  .sun-rays {
+    position: absolute;
+    left: 50%;
+    bottom: -62vh;
+    width: 160vmax;
+    height: 160vmax;
+    transform: translate(-50%, 0);
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(248, 152, 24, 0.10) 0deg 6deg,
+      transparent 6deg 22deg
+    );
+    -webkit-mask-image: radial-gradient(closest-side, black 0%, black 30%, transparent 68%);
+    mask-image: radial-gradient(closest-side, black 0%, black 30%, transparent 68%);
+    animation: ray-spin 90s linear infinite;
+    will-change: transform;
+  }
+
+  /* Perspective horizon grid — the ground plane rushing toward the sun. */
+  .horizon-grid {
+    position: absolute;
+    inset-inline: -20%;
+    bottom: 0;
+    height: 34vh;
+    background-image:
+      linear-gradient(rgba(248, 152, 24, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248, 152, 24, 0.10) 1px, transparent 1px);
+    background-size: 42px 42px;
+    transform: perspective(420px) rotateX(62deg);
+    transform-origin: top center;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 26%, black 72%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 26%, black 72%, transparent);
+    animation: grid-flow 2.6s linear infinite;
+  }
+
+  /* Light sweep across gradient display text. */
+  .text-sheen {
+    background-image: linear-gradient(
+      110deg,
+      #fbb04a 0%,
+      #f89818 30%,
+      #fff3e0 50%,
+      #f89818 70%,
+      #f08000 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-sheen 5.5s ease-in-out infinite;
+  }
+
+  /* Animated conic border that orbits a card on hover. */
+  .glow-border {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -150%;
+    z-index: -1;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(248, 152, 24, 0.0) 250deg,
+      rgba(251, 176, 74, 0.9) 320deg,
+      rgba(240, 128, 0, 0.9) 340deg,
+      transparent 360deg
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: border-orbit 3.2s linear infinite;
+  }
+  .glow-border::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--bg-surface);
+  }
+  .glow-border:hover::before { opacity: 1; }
+
+  /* Kinetic marquee track (content duplicated once for a seamless loop). */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-x 30s linear infinite;
+    will-change: transform;
+  }
+
+  .twinkle { animation: twinkle 3.2s ease-in-out infinite; }
+}
+
 /* Respect reduced motion globally as a safety net. */
 @media (prefers-reduced-motion: reduce) {
   *,

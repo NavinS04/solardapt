@@ -1,4 +1,5 @@
 import { Hero } from '@/components/scenes/Hero';
+import { Marquee } from '@/components/scenes/Marquee';
 import { Problem } from '@/components/scenes/Problem';
 import { OldWay } from '@/components/scenes/OldWay';
 import { Engine } from '@/components/scenes/Engine';
@@ -17,6 +18,7 @@ export default function HomePage() {
     <>
       <JsonLd />
       <Hero />
+      <Marquee />
       <Problem />
       <OldWay />
       <Engine />

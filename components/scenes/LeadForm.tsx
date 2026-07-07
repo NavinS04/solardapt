@@ -30,6 +30,7 @@ export function LeadForm() {
       phone: form.get('phone'),
       jobsPerMonth: form.get('jobsPerMonth') ? Number(form.get('jobsPerMonth')) : undefined,
       market: form.get('market') || undefined,
+      message: form.get('message') || undefined,
       company_website: form.get('company_website'), // honeypot
       source: 'meta',
       fbclid: params.get('fbclid') ?? undefined,
@@ -90,6 +91,20 @@ export function LeadForm() {
             ))}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
+          Anything we should know?
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={3}
+          maxLength={2000}
+          placeholder="Your service area, current lead sources, what you want fixed…"
+          className="w-full rounded-md border border-input bg-bg-surface px-3 py-2 text-sm outline-none focus:border-solar-500"
+        />
       </div>
 
       <label className="flex items-start gap-2 text-xs text-muted-foreground">

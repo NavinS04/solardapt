@@ -30,26 +30,37 @@ export default function BookPage() {
           </ul>
         </div>
 
-        <div className="rounded-md glass p-8">
-          {site.calendlyUrl ? (
-            // Calendly inline embed. The iframe with embed params is what
-            // Calendly's widget.js renders internally — same result, no
-            // third-party script to load or consent-gate.
-            <iframe
-              src={`${site.calendlyUrl}?embed_type=Inline&embed_domain=${encodeURIComponent(site.domain)}`}
-              title="Book a call with Solardapt"
-              className="h-[700px] w-full rounded-md"
-              loading="lazy"
-            />
-          ) : (
-            <>
-              <h2 className="mb-1 text-lg font-semibold">Request your call</h2>
-              <p className="mb-6 text-sm text-muted-foreground">
-                Tell us a little about your business and we’ll be in touch to confirm a time.
-              </p>
-              <LeadForm />
-            </>
+        <div className="space-y-6">
+          {site.calendlyUrl && (
+            <div className="rounded-md glass p-4 sm:p-6">
+              {/* Calendly inline embed. The iframe with embed params is what
+                  Calendly's widget.js renders internally — same result, no
+                  third-party script to load or consent-gate. Bookings flow to
+                  GHL via /api/webhooks/calendly. */}
+              <iframe
+                src={`${site.calendlyUrl}?embed_type=Inline&embed_domain=${encodeURIComponent(site.domain)}`}
+                title="Book a call with Solardapt"
+                className="h-[700px] w-full rounded-md"
+                loading="lazy"
+              />
+            </div>
           )}
+
+          <details className="group rounded-md glass p-6" open={!site.calendlyUrl}>
+            <summary className="cursor-pointer list-none text-lg font-semibold marker:content-none">
+              <span className="flex items-center justify-between">
+                Prefer to write instead?
+                <span className="text-sm font-normal text-solar-400 group-open:hidden">
+                  Send an enquiry →
+                </span>
+              </span>
+            </summary>
+            <p className="mb-6 mt-2 text-sm text-muted-foreground">
+              Tell us about your business and what you want fixed — we&apos;ll come back to you the
+              same working day.
+            </p>
+            <LeadForm />
+          </details>
         </div>
       </div>
     </section>

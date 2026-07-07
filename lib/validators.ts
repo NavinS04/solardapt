@@ -19,6 +19,7 @@ export const leadSchema = z.object({
   source: z.string().max(64).optional(),
   fbclid: z.string().max(512).optional(),
   utm: z.record(z.string(), z.string()).optional(),
+  message: z.string().max(2000).optional().or(z.literal('')),
   // Anti-bot honeypot — must stay empty.
   company_website: z.string().max(0).optional(),
   consentMarketing: z.boolean().optional(),
