@@ -32,11 +32,13 @@ export default function BookPage() {
 
         <div className="rounded-md glass p-8">
           {site.calendlyUrl ? (
-            // Lazy Calendly embed once the event link is supplied (§14).
+            // Calendly inline embed. The iframe with embed params is what
+            // Calendly's widget.js renders internally — same result, no
+            // third-party script to load or consent-gate.
             <iframe
-              src={site.calendlyUrl}
+              src={`${site.calendlyUrl}?embed_type=Inline&embed_domain=${encodeURIComponent(site.domain)}`}
               title="Book a call with Solardapt"
-              className="h-[680px] w-full rounded-md"
+              className="h-[700px] w-full rounded-md"
               loading="lazy"
             />
           ) : (

@@ -36,6 +36,9 @@ export function Footer() {
             <a href={`mailto:${site.email}`} className="hover:text-foreground">
               {site.email}
             </a>
+            <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="mt-1 block hover:text-foreground">
+              {site.phone}
+            </a>
           </p>
         </div>
 

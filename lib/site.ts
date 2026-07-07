@@ -10,7 +10,7 @@ export const site = {
   description:
     'Solardapt is the front office for established solar installers: we run the ads, build the funnel, answer every enquiry live in your name, qualify each caller, and put confirmed surveys straight into your diary. Exclusive by postcode district. 30-day rolling terms.',
   email: 'navinsonsana@solardapt.com',
-  phone: '', // ‹FILL› GHL UK number once ready for public display
+  phone: '+44 7427 845540',
   founder: 'Navin Sonsana',
   // UK-first; expansion markets per the ICP manual.
   markets: ['UK', 'Ireland', 'USA', 'Australia', 'Middle East'],
@@ -23,8 +23,8 @@ export const site = {
     tiktok: '',
     youtube: '',
   },
-  // ‹FILL› Calendly event link.
-  calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? '',
+  calendlyUrl:
+    process.env.NEXT_PUBLIC_CALENDLY_URL ?? 'https://calendly.com/navinsonsana-solardapt/30min',
 } as const;
 
 export const nav = [

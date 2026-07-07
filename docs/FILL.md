@@ -10,7 +10,7 @@ states until real data arrives.
       ON only when genuinely present
 - [ ] VSL video URL + poster image (`NEXT_PUBLIC_VSL_URL`, `/public/brand/vsl-poster.jpg`)
 - [ ] Real social URLs (FB/IG/LinkedIn/X/TikTok/YouTube) — `lib/site.ts`; omit any that don't exist
-- [ ] Business phone — `lib/site.ts`
+- [x] Business phone — +44 7427 845540 (`lib/site.ts`)
 - [ ] Pricing/terms (FAQ + Terms page)
 
 ## Brand assets (`/public/brand`)
@@ -24,7 +24,7 @@ states until real data arrives.
 - [ ] Complete **A2P 10DLC** (SMS) and **email domain authentication** inside GHL
 
 ## Booking & tracking (env)
-- [ ] Calendly event link (`NEXT_PUBLIC_CALENDLY_URL`)
+- [x] Calendly event link — https://calendly.com/navinsonsana-solardapt/30min
 - [ ] Meta Pixel ID + CAPI token + dataset ID
 - [ ] GA4 measurement ID + GTM container ID
 - [ ] Sentry DSN (optional, recommended)
