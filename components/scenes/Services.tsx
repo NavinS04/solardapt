@@ -4,14 +4,39 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
-// Mirrors the plan's execution roadmap: Foundation → Launch → Optimise → Scale.
+// The engagement, stage by stage — land the core retainer, prove the diary
+// fills, then optimise everything upstream of the install (ICP §8).
 const STAGES = [
-  { id: 'audit', label: 'Audit', body: 'We map your current lead flow, offer and economics to find the gap — before spending a penny on ads.' },
-  { id: 'build', label: 'Funnel build', body: 'Landing page, instant form and qualification logic built specifically for solar homeowners.' },
-  { id: 'creative', label: 'Creative & copy', body: 'Solar-specific ad creative and messaging frameworks designed to stop the scroll and pre-sell the call.' },
-  { id: 'launch', label: 'Launch', body: 'We go live with a controlled spend and a single ad set, instrumented end-to-end.' },
-  { id: 'optimise', label: 'Optimise', body: 'We drive down cost-per-appointment and push up show-rate with continuous testing.' },
-  { id: 'scale', label: 'Scale', body: 'Once the unit economics are proven, we scale spend and add retention so the pipeline compounds.' },
+  {
+    id: 'audit',
+    label: 'Audit',
+    body: 'We map your current enquiry flow, postcodes and economics — where the money leaks between click and diary — before a penny goes on ads.',
+  },
+  {
+    id: 'build',
+    label: 'Funnel build',
+    body: 'Landing funnel and qualification logic built for your service area and your model — private-pay finance-ready, or correctly screened grant work.',
+  },
+  {
+    id: 'launch',
+    label: 'Ads live',
+    body: 'Exclusive Meta campaigns in your postcode districts. Controlled spend, one ad set first, instrumented end-to-end. Billed transparently.',
+  },
+  {
+    id: 'phones',
+    label: 'Phones answered',
+    body: 'Every enquiry answered live in your trading name, to a script you approve. Recordings available. You keep aftercare calls; we take new enquiries.',
+  },
+  {
+    id: 'diary',
+    label: 'Diary managed',
+    body: 'Qualified callers become confirmed surveys in your calendar — confirmation call, reminders, reschedule handling, geographic clustering where possible.',
+  },
+  {
+    id: 'optimise',
+    label: 'Optimise & scale',
+    body: 'We drive cost-per-confirmed-survey down and show-rate up, then scale spend only once the unit economics are proven in your numbers.',
+  },
 ];
 
 export function Services() {
@@ -21,7 +46,7 @@ export function Services() {
   return (
     <section className="relative overflow-hidden bg-bg-1 py-28">
       <div className="container">
-        <SectionHeading eyebrow="The process" title="How we build your engine, step by step." />
+        <SectionHeading eyebrow="The process" title="How we take over your front office." />
 
         <div className="mx-auto mt-16 max-w-4xl">
           {/* Timeline rail */}

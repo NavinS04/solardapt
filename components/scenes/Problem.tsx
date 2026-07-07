@@ -5,16 +5,16 @@ import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/motion/Reveal';
 
-// Pain points straight from the business plan (BUILD_SPEC §1).
+// Pain points straight from the ICP manual — UK installer vocabulary.
 const PAINS = [
-  'Unpredictable lead flow',
-  'Over-dependence on referrals',
-  'Empty installation calendars',
-  'Competing against bigger solar companies',
-  'Poor-quality, shared leads',
-  'High cost per lead',
-  'Wasting time on quotes that never close',
-  'Cash-flow swings month to month',
+  'Shared leads sold to 3–6 competing firms',
+  '“Free solar grant” clickbait filling the diary with renters and grant tourists',
+  'Scaffold booked, customer no-shows — £600–£1,200 gone before a panel is lifted',
+  'Enquiries ringing out to voicemail while you’re on a roof',
+  'The November–January trough with crews still on payroll',
+  'Surveyors walking when the diary runs thin',
+  'Checkatrade & directory rankings you don’t control',
+  'Quoted-not-signed jobs nobody has time to chase',
 ];
 
 export function Problem() {
@@ -26,16 +26,16 @@ export function Problem() {
       <div className="container">
         <SectionHeading
           eyebrow="The problem"
-          title="Empty calendars kill solar businesses."
-          subtitle="Most installers don't have a sales problem. They have a predictability problem."
+          title="Empty diaries kill solar businesses."
+          subtitle="You don’t need clicks. You need sat surveys with people who actually own the roof."
         />
 
         <div className="mt-16 grid gap-10 lg:grid-cols-2 lg:items-center">
-          {/* Animated empty-calendar + flat-lining revenue */}
+          {/* Animated empty-diary + flat-lining revenue */}
           <Reveal>
             <div className="glass rounded-md p-6">
               <div className="mb-4 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Your install calendar</span>
+                <span className="text-sm text-muted-foreground">Your survey diary</span>
                 <span className="text-xs text-error">Mostly empty</span>
               </div>
               <div ref={ref} className="grid grid-cols-7 gap-1.5">
@@ -67,7 +67,7 @@ export function Problem() {
                 />
               </svg>
               <p className="text-xs text-muted-foreground">
-                Revenue flat-lining — the feast-or-famine cycle.
+                Fixed crew costs against volatile demand — the feast-or-famine cycle.
               </p>
             </div>
           </Reveal>

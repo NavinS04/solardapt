@@ -4,10 +4,23 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
+// The three ways installer marketing money dies (ICP §1.3, §3.3).
 const BROKEN = [
-  { label: 'Boosted posts', detail: 'No offer, no qualification — clicks that never call back.' },
-  { label: 'Shared lead lists', detail: 'The same homeowner sold to five of your competitors.' },
-  { label: 'Referrals only', detail: 'Unpredictable and impossible to scale on demand.' },
+  {
+    label: 'Shared-lead platforms',
+    detail:
+      'GreenMatch, Bark, MyBuilder — the same homeowner sold to 3–6 firms, sick of the phone before you’ve even called.',
+  },
+  {
+    label: '“Free grant” clickbait',
+    detail:
+      'Floods of renters and ineligible enquiries that poison the diary with surveys that can never convert.',
+  },
+  {
+    label: 'The missed-call graveyard',
+    detail:
+      'Ads work, the phone rings — and rings out, because you’re on a roof. The enquiry goes cold within the hour.',
+  },
 ];
 
 export function OldWay() {
@@ -19,8 +32,8 @@ export function OldWay() {
       <div className="container">
         <SectionHeading
           eyebrow="The old way"
-          title="The leaky pipeline most installers run."
-          subtitle="Traditional marketing leaks money at every stage — and you feel it in your calendar."
+          title="Most installer campaigns don’t fail at the click."
+          subtitle="They fail at the phone. That’s the gap where your last marketing budget died."
         />
 
         <div ref={ref} className="mx-auto mt-16 grid max-w-4xl gap-4 md:grid-cols-3">
@@ -44,7 +57,7 @@ export function OldWay() {
           ))}
         </div>
         <p className="mt-12 text-center text-lg text-muted-foreground">
-          There&apos;s a better way to fill the calendar →
+          There&apos;s a better way to fill the diary →
         </p>
       </div>
     </section>

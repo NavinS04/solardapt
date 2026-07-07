@@ -29,12 +29,15 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            Exclusive, pre-qualified homeowner appointments for solar installers — booked straight
-            into your calendar.
+            Your entire front office: we run the ads, answer your phones live, qualify every enquiry,
+            and hand your surveyors a full, sorted diary.
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
             <a href={`mailto:${site.email}`} className="hover:text-foreground">
               {site.email}
+            </a>
+            <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="mt-1 block hover:text-foreground">
+              {site.phone}
             </a>
           </p>
         </div>
@@ -97,7 +100,7 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>
-        <p>Exclusive leads · UK · USA · Australia · Middle East</p>
+        <p>Postcode-exclusive · UK-first · Ireland · USA · Australia · Middle East</p>
       </div>
     </footer>
   );

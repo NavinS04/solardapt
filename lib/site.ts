@@ -1,16 +1,19 @@
-// Centralised site config — copy, markets, contact. Marketing can later move
-// editable fields into the Content/CMS-lite table (BUILD_SPEC §8).
+// Centralised site config — copy, markets, contact. Grounded in the ICP/GTM
+// manual: Solardapt is the installer's entire front office (ads + funnel +
+// live call answering + qualified, confirmed surveys in a sorted diary),
+// UK-first, postcode-exclusive, 30-day rolling terms.
 export const site = {
   name: 'Solardapt',
   domain: 'solardapt.com',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://solardapt.com',
-  tagline: 'Predictable Solar Leads. Booked Every Week.',
+  tagline: 'Full Diaries for Solar Installers. Ads, Phones & Bookings — Handled.',
   description:
-    'Solardapt builds high-converting Meta advertising systems that deliver exclusive, pre-qualified homeowner appointments directly into solar installers’ calendars. Never shared, never resold.',
+    'Solardapt is the front office for established solar installers: we run the ads, build the funnel, answer every enquiry live in your name, qualify each caller, and put confirmed surveys straight into your diary. Exclusive by postcode district. 30-day rolling terms.',
   email: 'navinsonsana@solardapt.com',
-  phone: '', // ‹FILL› business phone
+  phone: '+44 7427 845540',
   founder: 'Navin Sonsana',
-  markets: ['UK', 'USA', 'Australia', 'Middle East'],
+  // UK-first; expansion markets per the ICP manual.
+  markets: ['UK', 'Ireland', 'USA', 'Australia', 'Middle East'],
   // ‹FILL› real URLs only — omit any account that doesn't exist.
   social: {
     facebook: '',
@@ -20,8 +23,8 @@ export const site = {
     tiktok: '',
     youtube: '',
   },
-  // ‹FILL› Calendly event link.
-  calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? '',
+  calendlyUrl:
+    process.env.NEXT_PUBLIC_CALENDLY_URL ?? 'https://calendly.com/navinsonsana-solardapt/30min',
 } as const;
 
 export const nav = [

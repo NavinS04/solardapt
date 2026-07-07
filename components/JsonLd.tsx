@@ -23,11 +23,11 @@ export function JsonLd() {
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      serviceType: 'Meta advertising for solar installers',
+      serviceType: 'Front-office growth partner for solar installers',
       provider: { '@type': 'Organization', name: site.name },
       areaServed: site.markets,
       description:
-        'Done-for-you Meta advertising funnels delivering exclusive, pre-qualified homeowner appointments to solar installation companies.',
+        'Done-for-you front office for solar installers: exclusive Meta advertising, conversion funnel, live call answering, qualification, and confirmed surveys booked into the installer\u2019s diary.',
     },
     {
       '@context': 'https://schema.org',
@@ -43,10 +43,10 @@ export function JsonLd() {
         },
         {
           '@type': 'Question',
-          name: 'Are the leads exclusive?',
+          name: 'Are the appointments exclusive?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. Every appointment is exclusive to your business — never shared, never resold.',
+            text: 'Yes. Exclusivity is contractual by postcode district — an enquiry generated in your districts is only ever booked to your business.',
           },
         },
       ],

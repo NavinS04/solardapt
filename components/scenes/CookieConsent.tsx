@@ -31,7 +31,7 @@ export function CookieConsent() {
 
   const persist = (consent: Consent) => {
     localStorage.setItem(KEY, JSON.stringify(consent));
-    // Fire-and-forget; server logs to ConsentRecord with IP + policy version.
+    // Fire-and-forget; server writes a structured consent audit log (IP + policy version).
     fetch('/api/consent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -22,11 +22,12 @@ export function FinalCta() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-3xl font-display text-[clamp(2.25rem,6vw,4.5rem)] font-bold leading-[1.02] tracking-tight"
         >
-          Ready for a calendar that <span className="text-gradient">fills itself?</span>
+          Ready for a diary that <span className="text-gradient">fills itself?</span>
         </motion.h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-          Book a free, no-obligation strategy call. We’ll show you exactly how we’d build your
-          predictable appointment pipeline.
+          A free, no-obligation strategy call. We’ll audit your enquiry flow and show you exactly
+          where your last marketing budget died — and how we’d fix it. 30-day rolling terms if you
+          go ahead. Your postcode districts, reserved.
         </p>
         <div className="mt-10 flex justify-center">
           <Magnetic>

@@ -5,14 +5,14 @@ import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 
-// The "Solardapt Engine" — visualised, not explained (BUILD_SPEC §6.4).
+// The "Solardapt Engine" — the full front office, visualised (ICP §1.3).
 const NODES = [
-  { title: 'Meta Ad', detail: 'Solar-specific creative that stops the scroll.' },
-  { title: 'Landing Page', detail: 'A niche offer built to convert homeowners.' },
-  { title: 'Qualification', detail: 'We screen for intent before anyone books.' },
-  { title: 'SMS + Email', detail: 'Automated nurture so leads show up warm.' },
-  { title: 'Booked Call', detail: 'A confirmed slot lands on your calendar.' },
-  { title: 'Installation', detail: 'Your crew does what it does best.' },
+  { title: 'Exclusive Ads', detail: 'Solar-specific Meta ads run for you alone in your postcode districts.' },
+  { title: 'Conversion Funnel', detail: 'A landing funnel built to pre-sell the survey, not collect clicks.' },
+  { title: 'Live Call Answering', detail: 'Every enquiry answered in your trading name — no voicemail graveyard.' },
+  { title: 'Qualification', detail: 'Homeowner, roof basics, finance-readiness or grant eligibility — screened before booking.' },
+  { title: 'Confirmed Survey', detail: 'Booked into your diary with confirmation call, reminders and reschedule handling.' },
+  { title: 'Your Crew Installs', detail: 'Your only job: send a surveyor. Scaffold sequenced, diary sorted.' },
 ];
 
 export function Engine() {
@@ -26,8 +26,8 @@ export function Engine() {
       <div className="container relative">
         <SectionHeading
           eyebrow="The Solardapt Engine"
-          title="One system. A calendar that fills itself."
-          subtitle="Each stage qualifies harder than the last — so the calls you take are ready to buy."
+          title="Your entire front office. One system."
+          subtitle="We run the ads, own the phones, qualify every enquiry, and hand your surveyors a full, sorted diary."
         />
 
         <div ref={ref} className="relative mt-20">
@@ -39,7 +39,7 @@ export function Engine() {
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 1.8, ease: 'easeInOut' }}
             />
-            {/* Travelling lead particle, narrowing as it qualifies */}
+            {/* Travelling lead particle, qualifying as it goes */}
             {!reduced && (
               <motion.span
                 className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-solar-400 shadow-glow"

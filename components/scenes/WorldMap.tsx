@@ -6,11 +6,13 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 
 // Approximate node positions on an equirectangular map (percentages).
+// UK-first; expansion markets per the ICP manual.
 const MARKETS = [
-  { name: 'UK', x: 47, y: 30 },
-  { name: 'USA', x: 22, y: 38 },
-  { name: 'Australia', x: 83, y: 72 },
-  { name: 'Middle East', x: 58, y: 44 },
+  { name: 'UK', x: 47, y: 29, primary: true },
+  { name: 'Ireland', x: 44, y: 32, primary: false },
+  { name: 'USA', x: 22, y: 38, primary: false },
+  { name: 'Australia', x: 83, y: 72, primary: false },
+  { name: 'Middle East', x: 58, y: 44, primary: false },
 ];
 
 export function WorldMap() {
@@ -23,15 +25,15 @@ export function WorldMap() {
       <div className="container">
         <SectionHeading
           eyebrow="Markets"
-          title="Booking homeowner appointments across four markets."
-          subtitle="UK · USA · Australia · Middle East."
+          title="Built for the UK. Ready for the world."
+          subtitle="UK-first — fluent in MCS, SEG, DNO and the VAT window — expanding across Ireland, the USA, Australia and the Middle East."
         />
 
         <div
           ref={ref}
           className="relative mx-auto mt-16 aspect-[2/1] w-full max-w-4xl rounded-md glass"
           role="img"
-          aria-label="World map highlighting Solardapt's markets: UK, USA, Australia and the Middle East."
+          aria-label="World map highlighting Solardapt's markets: UK first, then Ireland, USA, Australia and the Middle East."
         >
           {/* Dotted-grid world stand-in (lightweight; swap for an R3F globe later). */}
           <div
@@ -51,13 +53,18 @@ export function WorldMap() {
                 />
               )}
               <motion.span
-                className="block size-3 rounded-full bg-solar-gradient shadow-glow"
+                className={`block rounded-full bg-solar-gradient shadow-glow ${m.primary ? 'size-4' : 'size-3'}`}
                 initial={{ scale: 0 }}
                 animate={inView ? { scale: 1 } : {}}
                 transition={{ delay: 0.2 + i * 0.2, type: 'spring', stiffness: 200, damping: 12 }}
               />
-              <span className="absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap text-xs text-muted-foreground">
+              <span
+                className={`absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap text-xs ${
+                  m.primary ? 'font-semibold text-solar-400' : 'text-muted-foreground'
+                }`}
+              >
                 {m.name}
+                {m.primary && ' · HQ'}
               </span>
             </div>
           ))}

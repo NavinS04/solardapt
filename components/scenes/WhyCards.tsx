@@ -1,17 +1,49 @@
 'use client';
 
-import { Shield, CalendarCheck, Settings, BarChart3, Sun, KeyRound } from 'lucide-react';
+import { MapPin, PhoneCall, ShieldCheck, CalendarCheck, Timer, Layers } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Tilt } from '@/components/motion/Tilt';
 import { Reveal } from '@/components/motion/Reveal';
 
+// The six audit questions every installer asks, answered before they're asked
+// (ICP §5.2). These are commitments of scope/process, not performance claims.
 const CARDS = [
-  { icon: Shield, title: 'Exclusive leads', detail: 'Never shared, never resold. Your pipeline only — homeowners only you get to call.' },
-  { icon: CalendarCheck, title: 'Booked appointments, not clicks', detail: 'Qualified homeowners land on your calendar with a confirmed time, not a maybe.' },
-  { icon: Settings, title: 'Done-for-you', detail: 'We build, run and optimise the entire funnel — creative, copy, qualification, follow-up.' },
-  { icon: BarChart3, title: 'Predictable & trackable', detail: 'Cost per lead, per appointment, show rate, close rate. No guessing, ever.' },
-  { icon: Sun, title: 'Specialists in solar only', detail: 'We do one thing: fill solar installers’ calendars. The frameworks are battle-tested for your niche.' },
-  { icon: KeyRound, title: 'You own the system', detail: 'The pipeline, the data and the assets are yours — not locked inside an agency black box.' },
+  {
+    icon: MapPin,
+    title: 'Postcode-district exclusivity',
+    detail:
+      'Your districts are yours alone — in writing, in the agreement. One installer per area, capped as a matter of policy.',
+  },
+  {
+    icon: PhoneCall,
+    title: 'Your phone, answered live',
+    detail:
+      'Every enquiry answered in your trading name, to a script you approve word-for-word, with recordings you can review.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Screened before they’re booked',
+    detail:
+      'Homeowner, roof basics, finance-readiness — or genuine grant eligibility if that’s your model. Grant tourists screened out.',
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Show-rate protection',
+    detail:
+      'Confirmation call, reminder sequence, live reschedule handling — because a no-show after scaffold is booked costs real money.',
+  },
+  {
+    icon: Timer,
+    title: '30-day rolling terms',
+    detail:
+      'No long lock-in. Start with a bounded trial, scale up or switch off on 30 days’ notice. You stay in control.',
+  },
+  {
+    icon: Layers,
+    title: 'The whole front office',
+    detail:
+      'Ads, funnel, phones, qualification, diary — one partner, one throat to choke. Your only job is to send a surveyor.',
+  },
 ];
 
 export function WhyCards() {
@@ -20,7 +52,7 @@ export function WhyCards() {
       <div className="container">
         <SectionHeading
           eyebrow="Why Solardapt"
-          title="Built to make your calendar the dependable part of the business."
+          title="The questions you’d audit us on — answered up front."
         />
         <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CARDS.map((card, i) => (
