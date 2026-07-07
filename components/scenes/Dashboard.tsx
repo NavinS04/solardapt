@@ -7,7 +7,7 @@ import { Counter } from '@/components/motion/Counter';
 import { Badge } from '@/components/ui/Badge';
 
 // NOTE: illustrative sample data only — clearly labelled, never presented as a
-// real client result (BUILD_SPEC §6.5).
+// real client result. Replace with verified numbers when they exist.
 const BARS = [24, 38, 31, 52, 47, 63, 71, 68, 84];
 
 export function Dashboard() {
@@ -19,8 +19,8 @@ export function Dashboard() {
       <div className="container">
         <SectionHeading
           eyebrow="The outcome"
-          title="What a dialled-in pipeline looks like."
-          subtitle="Appointments climbing, a calendar filling week by week, revenue you can forecast."
+          title="What a sorted diary looks like."
+          subtitle="Confirmed surveys climbing, crews routed efficiently, revenue you can forecast — through the winter, not just the summer."
         />
 
         <div ref={ref} className="mx-auto mt-16 max-w-5xl">
@@ -29,9 +29,9 @@ export function Dashboard() {
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {[
-              { label: 'Appointments / month', value: 42, suffix: '' },
+              { label: 'Confirmed surveys / month', value: 28, suffix: '' },
               { label: 'Show rate', value: 78, suffix: '%' },
-              { label: 'Booked 30–60 days out', value: 100, suffix: '%' },
+              { label: 'Diary booked ahead', value: 100, suffix: '%' },
             ].map((stat) => (
               <div key={stat.label} className="glass rounded-md p-6 text-center">
                 <div className="font-display text-4xl font-bold text-gradient">
@@ -42,10 +42,10 @@ export function Dashboard() {
             ))}
           </div>
 
-          {/* Climbing appointments chart */}
+          {/* Climbing surveys chart */}
           <div className="mt-6 glass rounded-md p-6">
             <div className="mb-6 flex items-center justify-between">
-              <span className="text-sm font-medium">Appointments booked, week by week</span>
+              <span className="text-sm font-medium">Confirmed surveys, week by week</span>
               <span className="text-xs text-success">▲ Trending up</span>
             </div>
             <div className="flex h-48 items-end gap-3">
@@ -59,6 +59,10 @@ export function Dashboard() {
                 />
               ))}
             </div>
+            <p className="mt-4 text-xs text-muted-foreground">
+              The comparison that matters: an exclusive, screened, confirmed survey converts at a
+              different order of magnitude to a shared lead sold to five of your competitors.
+            </p>
           </div>
         </div>
       </div>

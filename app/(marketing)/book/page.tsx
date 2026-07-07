@@ -17,11 +17,11 @@ export default function BookPage() {
             Book your free <span className="text-gradient">strategy call</span>
           </h1>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">
-            No pitch, no obligation. We’ll audit your current pipeline and show you exactly how we’d
-            fill your calendar with exclusive homeowner appointments.
+            No pitch, no obligation. We’ll audit your enquiry flow — ads, funnel, phones, diary —
+            and show you exactly where the money leaks and how we’d fix it.
           </p>
           <ul className="mt-8 space-y-3 text-sm text-muted-foreground">
-            {['A clear picture of your lead-gen gap', 'A tailored plan for predictable appointments', 'Honest numbers — no inflated promises'].map((item) => (
+            {['Postcode exclusivity checked for your districts', 'A tailored plan for a full, sorted survey diary', '30-day rolling terms — no long lock-in'].map((item) => (
               <li key={item} className="flex items-center gap-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-solar-500" />
                 {item}

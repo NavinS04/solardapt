@@ -1,7 +1,7 @@
 // Zod validators for every public boundary (BUILD_SPEC §10 security).
 import { z } from 'zod';
 
-export const MARKETS = ['UK', 'USA', 'AUSTRALIA', 'MIDDLE_EAST'] as const;
+export const MARKETS = ['UK', 'IRELAND', 'USA', 'AUSTRALIA', 'MIDDLE_EAST'] as const;
 export type Market = (typeof MARKETS)[number];
 
 export const leadSchema = z.object({

@@ -89,7 +89,7 @@ export function Calculator() {
       <div className="container">
         <SectionHeading
           eyebrow="ROI Calculator"
-          title="See the revenue you're leaving on the table."
+          title="See what an unbroken diary is worth."
           subtitle="Move the sliders. The maths is yours — no email required."
         />
 
@@ -148,7 +148,7 @@ export function Calculator() {
           {/* Outputs */}
           <div className="flex flex-col rounded-md bg-ink-900 p-8 text-white">
             <div className="grid grid-cols-2 gap-6">
-              <Output label="Extra appointments / month">
+              <Output label="Extra sat surveys / month">
                 <Counter value={result.extraAppointments} />
               </Output>
               <Output label="Added monthly revenue">

@@ -9,7 +9,14 @@ import { ease } from '@/lib/motion';
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 import { VslModal } from './VslModal';
 
-const HEADLINE = ['Predictable', 'Solar', 'Leads.', 'Booked', 'Every', 'Week.'];
+/*
+ * Hero structure (per owner spec):
+ *   line 1 — eyebrow: who this is for
+ *   line 2 — headline: the goal of the installers we target (full diary,
+ *            booked crews, predictable revenue — even through the winter trough)
+ *   line 3 — sub-headline: who we are NOT for (exclusion positioning)
+ */
+const HEADLINE = ['A', 'Full', 'Diary.', 'Booked', 'Crews.', 'Predictable', 'Revenue.'];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -47,17 +54,18 @@ export function Hero() {
       </motion.div>
 
       <motion.div style={{ y: contentY, opacity }} className="container relative pt-24 text-center">
+        {/* Line 1 — eyebrow: who this is for */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: ease.out }}
-          className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-xs text-muted-foreground"
+          className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-xs uppercase tracking-widest text-muted-foreground"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-success" /> Exclusive appointments for solar
-          installers
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
+          For established residential solar installers
         </motion.p>
 
-        {/* Masked word-by-word headline reveal */}
+        {/* Line 2 — headline: the goal. Masked word-by-word reveal. */}
         <h1 className="mx-auto max-w-4xl font-display text-[clamp(2.75rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
           {HEADLINE.map((word, i) => (
             <span key={i} className="mr-[0.25em] inline-block overflow-hidden align-bottom">
@@ -71,23 +79,25 @@ export function Hero() {
               </motion.span>
             </span>
           ))}
-          <span className="mt-2 block text-gradient">Without Buying Shared Leads.</span>
+          <span className="mt-2 block text-gradient">Even in November.</span>
         </h1>
 
+        {/* Line 3 — sub-headline: who we are NOT for */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: ease.out, delay: 0.8 }}
+          transition={{ duration: 0.6, ease: ease.out, delay: 0.85 }}
           className="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted-foreground"
         >
-          We build high-converting Meta advertising systems that deliver exclusive homeowner
-          appointments directly into your calendar.
+          Not for one-van startups or shared-lead bargain hunters. We&apos;re the full front office —
+          ads, funnel, live call answering and confirmed surveys in your diary — for installers
+          serious about growth. One installer per postcode district.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: ease.out, delay: 0.95 }}
+          transition={{ duration: 0.6, ease: ease.out, delay: 1.0 }}
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <Magnetic>
@@ -104,12 +114,14 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.6, delay: 1.25 }}
           className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs uppercase tracking-wider text-muted-foreground"
         >
-          <span>Exclusive leads</span>
+          <span>Exclusive by postcode</span>
           <span className="text-solar-500">·</span>
-          <span>UK</span>
+          <span>UK-first</span>
+          <span className="text-solar-500">·</span>
+          <span>Ireland</span>
           <span className="text-solar-500">·</span>
           <span>USA</span>
           <span className="text-solar-500">·</span>

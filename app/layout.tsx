@@ -15,11 +15,12 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
-    'solar leads',
-    'solar appointments',
-    'Meta ads for solar installers',
+    'solar appointments UK',
     'exclusive solar leads',
-    'solar marketing agency',
+    'solar installer marketing',
+    'appointment setting for solar installers',
+    'solar call handling and diary management',
+    'MCS installer lead generation',
   ],
   authors: [{ name: site.founder }],
   openGraph: {

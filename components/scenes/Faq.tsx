@@ -5,15 +5,37 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Search } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
-// Objection-handling from the plan, rewritten customer-facing (BUILD_SPEC §6.12).
+// Objection-handling from the ICP manual (§7), rewritten customer-facing.
 const FAQS = [
-  { q: 'I tried Facebook ads and they didn’t work.', a: 'Most installer ads fail because they lack a niche offer and a nurture system. We rebuild the whole funnel — creative, qualification and follow-up — not just boost a post.' },
-  { q: 'Does Facebook even work for solar?', a: 'Yes — with solar-specific creative frameworks and qualification. We target homeowners showing real intent and screen them before the call.' },
-  { q: 'We already get enough referrals.', a: 'Referrals aren’t predictable or scalable. Paid inbound adds a second pipeline you control, so you’re never waiting on word of mouth.' },
-  { q: 'We don’t have budget or capacity right now.', a: 'We start with one ad set and only scale once cost-per-appointment is proven profitable. You grow spend from results, not hope.' },
-  { q: 'Lead quality is always terrible.', a: 'We qualify in the form (jobs per month, intent) and nurture by SMS and email, so the calls that reach you arrive pre-screened.' },
-  { q: 'It’s too competitive — or we could run ads ourselves.', a: 'Book the free strategy call. The audit shows exactly where the gap is, with no obligation. If you can run it better yourself, we’ll tell you.' },
-  // ‹FILL› pricing / terms questions once defined.
+  {
+    q: 'I’ve been burned by agencies and lead companies before.',
+    a: 'So has almost every installer we speak to — the shared-lead treadmill and the “free grant” clickbait pattern are exactly why we built this differently. We start with a bounded trial on 30-day rolling terms, with a written replacement policy for no-shows and screen-failures. The first step is small, time-boxed and reversible.',
+  },
+  {
+    q: 'How do I know my competitor down the road isn’t getting the same appointments?',
+    a: 'Postcode-district exclusivity, in writing, in the agreement. An enquiry generated in your districts is only ever booked to you, and we cap the number of clients per region as a matter of policy. We’ll name the exclusivity boundary in the contract before you ask.',
+  },
+  {
+    q: 'Homeowners only want free panels — won’t the leads all be grant tourists?',
+    a: 'Every appointment is qualified on homeownership, roof basics, and — depending on your model — either private-pay finance readiness or genuine grant eligibility. If you don’t do grant work, grant-seekers are screened out before they ever reach your diary.',
+  },
+  {
+    q: 'Show rate is what kills me — scaffold costs money.',
+    a: 'Agreed, which is why reliability beats raw volume. Every booking gets a confirmation call, a reminder sequence and live reschedule handling, backed by a replacement policy for no-shows. You should never erect scaffold for a maybe.',
+  },
+  {
+    q: 'Your retainer sounds like every other agency’s retainer.',
+    a: 'An ad agency runs ads and sends you a report. We run the ads, build and own the funnel, answer every enquiry live in your trading name, qualify the caller, and put a confirmed survey in your diary. One question separates us from the last lot: did they answer your phone?',
+  },
+  {
+    q: 'I don’t want to hand my phones to an outsider.',
+    a: 'You approve the qualification script word-for-word, calls are answered in your trading name, recordings are available to review, and bookings follow your rules — service radius, job types, slot lengths. We start with new-enquiry handling only; you keep existing customer and aftercare calls.',
+  },
+  {
+    q: 'What happens when the 0% VAT window ends in March 2027?',
+    a: 'VAT reverts to 5%, not 20% — and the underlying drivers stay: high grid prices, SEG export income, battery time-of-use economics and solar on new-builds. The months between now and then are the strongest homeowner-urgency window in years, which is exactly why the diary should be full now, with a partner you can scale or switch off on 30 days’ notice.',
+  },
+  // ‹FILL› pricing/terms questions once retainer structure is public.
 ];
 
 export function Faq() {
