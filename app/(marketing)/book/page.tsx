@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { LeadForm } from '@/components/scenes/LeadForm';
-import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Book a Free Strategy Call',
@@ -31,22 +31,25 @@ export default function BookPage() {
         </div>
 
         <div className="space-y-6">
-          {site.calendlyUrl && (
-            <div className="rounded-md glass p-4 sm:p-6">
-              {/* Calendly inline embed. The iframe with embed params is what
-                  Calendly's widget.js renders internally — same result, no
-                  third-party script to load or consent-gate. Bookings flow to
-                  GHL via /api/webhooks/calendly. */}
-              <iframe
-                src={`${site.calendlyUrl}?embed_type=Inline&embed_domain=${encodeURIComponent(site.domain)}`}
-                title="Book a call with Solardapt"
-                className="h-[700px] w-full rounded-md"
-                loading="lazy"
-              />
-            </div>
-          )}
+          <div className="rounded-md glass p-4 sm:p-6">
+            {/* GHL booking calendar — bookings land natively in the GHL
+                calendar and trigger its workflows. form_embed.js auto-sizes
+                the iframe height. */}
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/booking/HI2HqxTYWVGJylVnUPpQ"
+              id="HI2HqxTYWVGJylVnUPpQ_1783627244587"
+              title="Book a call with Solardapt"
+              scrolling="no"
+              className="rounded-md"
+              style={{ width: '100%', minHeight: 700, border: 'none', overflow: 'hidden' }}
+            />
+            <Script
+              src="https://link.msgsndr.com/js/form_embed.js"
+              strategy="lazyOnload"
+            />
+          </div>
 
-          <details className="group rounded-md glass p-6" open={!site.calendlyUrl}>
+          <details className="group rounded-md glass p-6">
             <summary className="cursor-pointer list-none text-lg font-semibold marker:content-none">
               <span className="flex items-center justify-between">
                 Prefer to write instead?
