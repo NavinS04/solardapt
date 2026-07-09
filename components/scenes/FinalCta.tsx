@@ -25,14 +25,14 @@ export function FinalCta() {
           Ready for a diary that <span className="text-gradient">fills itself?</span>
         </motion.h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-          A free, no-obligation strategy call. We’ll audit your enquiry flow and show you exactly
-          where your last marketing budget died — and how we’d fix it. 30-day rolling terms if you
-          go ahead. Your postcode districts, reserved.
+          A free, no obligation planning call. We will map your enquiry flow, show you exactly where
+          enquiries are dying and reserve your postcode districts if we are a fit. 30 day rolling
+          terms if you go ahead.
         </p>
         <div className="mt-10 flex justify-center">
           <Magnetic>
             <Button size="lg" onClick={() => (window.location.href = '/book')}>
-              Book Free Strategy Call <ArrowRight className="size-4" />
+              Book a Free Planning Call <ArrowRight className="size-4" />
             </Button>
           </Magnetic>
         </div>

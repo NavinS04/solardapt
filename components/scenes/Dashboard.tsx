@@ -20,7 +20,7 @@ export function Dashboard() {
         <SectionHeading
           eyebrow="The outcome"
           title="What a sorted diary looks like."
-          subtitle="Confirmed surveys climbing, crews routed efficiently, revenue you can forecast — through the winter, not just the summer."
+          subtitle="Confirmed surveys climbing, crews routed efficiently and revenue you can forecast through the winter, not just the summer."
         />
 
         <div ref={ref} className="mx-auto mt-16 max-w-5xl">

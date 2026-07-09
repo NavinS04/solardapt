@@ -1,92 +1,74 @@
 'use client';
 
-import { Star } from 'lucide-react';
+import { PhoneCall, MapPin, CalendarCheck } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/motion/Reveal';
+import { Badge } from '@/components/ui/Badge';
 
 /*
- * Social proof. ONLY real testimonials should ship here. Until verified ones
- * exist we render clearly-marked placeholders and gate review badges behind
- * config flags defaulting to OFF (BUILD_SPEC §6.10). Never present invented
- * facts as real.
+ * Proof section. Until verified client results exist, we show the situations
+ * we are built to fix, written as before and after vignettes and clearly
+ * labelled as illustrative. Real, named client results replace these the
+ * moment they are verified. Publishing invented reviews under real sounding
+ * names is banned practice under the UK DMCC Act 2024 and the FTC rule on
+ * fake testimonials, so we do not do it.
  */
-// TODO: replace with real, verified testimonials (name, company, photo, result).
-const TESTIMONIALS: { name: string; company: string; quote: string; result: string }[] = [];
-
-// Gate each badge behind a flag — defaults OFF. Flip only when the account is real.
-const BADGES = {
-  google: process.env.NEXT_PUBLIC_BADGE_GOOGLE === 'true',
-  trustpilot: process.env.NEXT_PUBLIC_BADGE_TRUSTPILOT === 'true',
-  metaPartner: process.env.NEXT_PUBLIC_BADGE_META_PARTNER === 'true',
-  clutch: process.env.NEXT_PUBLIC_BADGE_CLUTCH === 'true',
-};
+const VIGNETTES = [
+  {
+    icon: PhoneCall,
+    before: 'Enquiries ringing out to voicemail while the owner is on a roof.',
+    after:
+      'Every call answered live in the trading name, qualified on the spot and booked before a competitor returns the voicemail.',
+    tag: 'Live call answering',
+  },
+  {
+    icon: MapPin,
+    before: 'Paying for the same shared lead as three other firms.',
+    after:
+      'Enquiries generated for one installer only, with postcode district exclusivity written into the agreement.',
+    tag: 'Exclusive by district',
+  },
+  {
+    icon: CalendarCheck,
+    before: 'Scaffold booked twice in a month for surveys that never showed.',
+    after:
+      'Confirmation calls, reminders and reschedule handling on every booking, backed by a replacement policy for no shows.',
+    tag: 'Show rate protection',
+  },
+];
 
 export function SocialProof() {
-  const hasTestimonials = TESTIMONIALS.length > 0;
-  const activeBadges = Object.entries(BADGES).filter(([, on]) => on);
-
   return (
     <section className="relative overflow-hidden bg-bg-1 py-28">
       <div className="container">
         <SectionHeading
-          eyebrow="Proof"
-          title="Results from solar installers we work with."
-          subtitle="We only publish verified results. Yours could be next."
+          eyebrow="The switch"
+          title="What changes when we take the front office."
+          subtitle="Verified client results are published here as they land. Until then, this is the change installers come to us for."
         />
 
-        {activeBadges.length > 0 && (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            {activeBadges.map(([key]) => (
-              <span key={key} className="rounded-full border border-border bg-muted px-4 py-2 text-xs capitalize text-muted-foreground">
-                {key} verified
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="mt-6 flex justify-center">
+          <Badge>Illustrative scenarios, not client reviews</Badge>
+        </div>
 
-        {hasTestimonials ? (
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
-            {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.06}>
-                <figure className="h-full rounded-md glass p-6">
-                  <div className="mb-3 flex gap-0.5 text-solar-500">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Star key={s} className="size-4 fill-current" />
-                    ))}
-                  </div>
-                  <blockquote className="text-sm text-foreground">“{t.quote}”</blockquote>
-                  <figcaption className="mt-4 text-sm">
-                    <span className="font-semibold">{t.name}</span>
-                    <span className="block text-muted-foreground">{t.company}</span>
-                    <span className="mt-1 block text-solar-400">{t.result}</span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          // Graceful empty state — honest placeholder, no fabricated numbers.
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Reveal key={i} delay={i * 0.06}>
-                <div className="flex h-full flex-col rounded-md border border-dashed border-border bg-bg-surface/40 p-6">
-                  <div className="mb-3 flex gap-0.5 text-muted-foreground/40">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Star key={s} className="size-4" />
-                    ))}
-                  </div>
-                  {/* TODO: real testimonial */}
-                  <p className="text-sm text-muted-foreground">
-                    Verified installer results will appear here as we publish them.
-                  </p>
-                  <p className="mt-auto pt-6 text-xs uppercase tracking-widest text-muted-foreground/60">
-                    Awaiting verified result
-                  </p>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {VIGNETTES.map((v, i) => (
+            <Reveal key={v.tag} delay={i * 0.06}>
+              <div className="flex h-full flex-col rounded-md glass p-7">
+                <div className="mb-5 inline-flex size-12 items-center justify-center rounded-md bg-solar-500/10 text-solar-400">
+                  <v.icon className="size-6" />
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        )}
+                <p className="text-sm text-muted-foreground line-through decoration-error/60">
+                  {v.before}
+                </p>
+                <p className="mt-4 text-sm text-foreground">{v.after}</p>
+                <span className="mt-auto pt-6 text-xs font-semibold uppercase tracking-widest text-solar-500">
+                  {v.tag}
+                </span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

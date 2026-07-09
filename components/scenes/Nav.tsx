@@ -55,7 +55,7 @@ export function Nav() {
           <div className="hidden md:block">
             <Magnetic>
               <Button onClick={() => (window.location.href = '/book')}>
-                Book Free Strategy Call
+                Book a Planning Call
               </Button>
             </Magnetic>
           </div>
@@ -110,7 +110,7 @@ export function Nav() {
                   className="mt-4 w-full"
                   onClick={() => (window.location.href = '/book')}
                 >
-                  Book Free Strategy Call
+                  Book a Planning Call
                 </Button>
               </motion.li>
             </motion.ul>

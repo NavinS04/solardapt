@@ -10,9 +10,9 @@ import { Reveal } from '@/components/motion/Reveal';
 const CARDS = [
   {
     icon: MapPin,
-    title: 'Postcode-district exclusivity',
+    title: 'Postcode district exclusivity',
     detail:
-      'Your districts are yours alone — in writing, in the agreement. One installer per area, capped as a matter of policy.',
+      'Your districts are yours alone, in writing, in the agreement. One installer per area, capped as a matter of policy.',
   },
   {
     icon: PhoneCall,
@@ -22,27 +22,27 @@ const CARDS = [
   },
   {
     icon: ShieldCheck,
-    title: 'Screened before they’re booked',
+    title: 'Screened before they are booked',
     detail:
-      'Homeowner, roof basics, finance-readiness — or genuine grant eligibility if that’s your model. Grant tourists screened out.',
+      'Homeowner, roof basics and finance readiness, or genuine grant eligibility if that is your model. Grant tourists screened out.',
   },
   {
     icon: CalendarCheck,
     title: 'Show-rate protection',
     detail:
-      'Confirmation call, reminder sequence, live reschedule handling — because a no-show after scaffold is booked costs real money.',
+      'Confirmation call, reminder sequence and live reschedule handling, because a no show after scaffold is booked costs real money.',
   },
   {
     icon: Timer,
-    title: '30-day rolling terms',
+    title: '30 day rolling terms',
     detail:
-      'No long lock-in. Start with a bounded trial, scale up or switch off on 30 days’ notice. You stay in control.',
+      'No long contracts. Start with a bounded trial, then scale up or switch off on 30 days notice. You stay in control.',
   },
   {
     icon: Layers,
     title: 'The whole front office',
     detail:
-      'Ads, funnel, phones, qualification, diary — one partner, one throat to choke. Your only job is to send a surveyor.',
+      'Ads, funnel, phones, qualification and diary. One partner, one number to call. Your only job is to send a surveyor.',
   },
 ];
 
@@ -52,7 +52,7 @@ export function WhyCards() {
       <div className="container">
         <SectionHeading
           eyebrow="Why Solardapt"
-          title="The questions you’d audit us on — answered up front."
+          title="Every question installers ask, answered up front."
         />
         <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CARDS.map((card, i) => (

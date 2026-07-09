@@ -7,13 +7,13 @@ import { Reveal } from '@/components/motion/Reveal';
 
 // Pain points straight from the ICP manual — UK installer vocabulary.
 const PAINS = [
-  'Shared leads sold to 3–6 competing firms',
+  'Shared leads sold to three or more competing firms',
   '“Free solar grant” clickbait filling the diary with renters and grant tourists',
-  'Scaffold booked, customer no-shows — £600–£1,200 gone before a panel is lifted',
+  'Scaffold booked, then a no show. £600 to £1,200 gone before a panel is lifted',
   'Enquiries ringing out to voicemail while you’re on a roof',
-  'The November–January trough with crews still on payroll',
+  'The November to January trough with crews still on payroll',
   'Surveyors walking when the diary runs thin',
-  'Checkatrade & directory rankings you don’t control',
+  'Directory rankings you don’t control',
   'Quoted-not-signed jobs nobody has time to chase',
 ];
 
@@ -67,7 +67,7 @@ export function Problem() {
                 />
               </svg>
               <p className="text-xs text-muted-foreground">
-                Fixed crew costs against volatile demand — the feast-or-famine cycle.
+                Fixed crew costs against volatile demand. The feast and famine cycle.
               </p>
             </div>
           </Reveal>

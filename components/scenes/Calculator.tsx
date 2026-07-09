@@ -90,7 +90,7 @@ export function Calculator() {
         <SectionHeading
           eyebrow="ROI Calculator"
           title="See what an unbroken diary is worth."
-          subtitle="Move the sliders. The maths is yours — no email required."
+          subtitle="Move the sliders. The maths is yours, no email needed."
         />
 
         <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2">
@@ -164,7 +164,7 @@ export function Calculator() {
               </Output>
             </div>
             <p className="mt-6 text-xs text-white/50">
-              Conservative, transparent assumptions. Your real numbers come out of the free audit.
+              Conservative, transparent assumptions. Your real numbers come out of the planning call.
             </p>
             <Button size="lg" className="mt-auto w-full" onClick={() => (window.location.href = '/book')}>
               See how we&apos;d build this for you <ArrowRight className="size-4" />

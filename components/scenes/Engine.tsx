@@ -9,8 +9,8 @@ import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 const NODES = [
   { title: 'Exclusive Ads', detail: 'Solar-specific Meta ads run for you alone in your postcode districts.' },
   { title: 'Conversion Funnel', detail: 'A landing funnel built to pre-sell the survey, not collect clicks.' },
-  { title: 'Live Call Answering', detail: 'Every enquiry answered in your trading name — no voicemail graveyard.' },
-  { title: 'Qualification', detail: 'Homeowner, roof basics, finance-readiness or grant eligibility — screened before booking.' },
+  { title: 'Live Call Answering', detail: 'Every enquiry answered in your trading name, so nothing dies in voicemail.' },
+  { title: 'Qualification', detail: 'Homeowner, roof basics and finance readiness, screened before anything is booked.' },
   { title: 'Confirmed Survey', detail: 'Booked into your diary with confirmation call, reminders and reschedule handling.' },
   { title: 'Your Crew Installs', detail: 'Your only job: send a surveyor. Scaffold sequenced, diary sorted.' },
 ];
@@ -50,7 +50,7 @@ export function Engine() {
             )}
           </div>
 
-          <ol className="grid gap-6 lg:grid-cols-6">
+          <ol className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
             {NODES.map((node, i) => (
               <motion.li
                 key={node.title}

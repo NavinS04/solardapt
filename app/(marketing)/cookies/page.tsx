@@ -7,9 +7,10 @@ export default function Cookies() {
   return (
     <LegalPage title="Cookie Policy" updated="June 2026">
       <p>
-        We use a granular consent manager (necessary / analytics / marketing). No analytics or
-        marketing cookies — including GA4, Google Tag Manager and the Meta Pixel — load before you
-        consent. You can change your choice at any time via the cookie banner.
+        In line with PECR and the UK GDPR we use a granular consent manager (necessary, analytics,
+        marketing). No analytics or marketing cookies, including GA4, Google Tag Manager and the
+        Meta Pixel, load before you consent. You can change your choice at any time via the cookie
+        banner.
       </p>
       <h2>Categories</h2>
       <p>
