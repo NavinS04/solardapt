@@ -58,7 +58,7 @@ export function VslModal({ open, onClose }: { open: boolean; onClose: () => void
                   Our walkthrough of the Solardapt Engine is on its way. Prefer a live version?
                 </p>
                 <a href="/book" className="text-gradient font-semibold">
-                  Book a free strategy call →
+                  Book a free planning call →
                 </a>
               </div>
             )}

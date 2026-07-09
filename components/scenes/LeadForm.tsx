@@ -117,7 +117,7 @@ export function LeadForm() {
       </label>
 
       <Button type="submit" size="lg" className="w-full" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : 'Request my strategy call'}
+        {status === 'sending' ? 'Sending…' : 'Request my planning call'}
       </Button>
       {status === 'error' && Object.keys(errors).length === 0 && (
         <p className="text-sm text-error">Something went wrong. Please try again.</p>

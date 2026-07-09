@@ -3,14 +3,14 @@
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 
 const ITEMS = [
-  'Postcode-exclusive',
+  'Postcode exclusive',
   'Live call answering',
   'Confirmed surveys',
-  'Show-rate protection',
+  'Show rate protection',
   'Screened enquiries',
-  '30-day rolling terms',
+  '30 day rolling terms',
   'Your script, your rules',
-  'UK-first',
+  'UK based',
 ];
 
 /** Kinetic keyword strip under the hero — content duplicated for a seamless

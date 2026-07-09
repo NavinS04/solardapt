@@ -8,14 +8,14 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 // fills, then optimise everything upstream of the install (ICP §8).
 const STAGES = [
   {
-    id: 'audit',
-    label: 'Audit',
-    body: 'We map your current enquiry flow, postcodes and economics — where the money leaks between click and diary — before a penny goes on ads.',
+    id: 'groundwork',
+    label: 'Groundwork',
+    body: 'We map your current enquiry flow, postcodes and economics, and find where money leaks between click and diary, before a penny goes on ads.',
   },
   {
     id: 'build',
     label: 'Funnel build',
-    body: 'Landing funnel and qualification logic built for your service area and your model — private-pay finance-ready, or correctly screened grant work.',
+    body: 'Landing funnel and qualification logic built for your service area and your model, whether that is private pay work or correctly screened grant work.',
   },
   {
     id: 'launch',
@@ -25,12 +25,12 @@ const STAGES = [
   {
     id: 'phones',
     label: 'Phones answered',
-    body: 'Every enquiry answered live in your trading name, to a script you approve. Recordings available. You keep aftercare calls; we take new enquiries.',
+    body: 'Every enquiry answered live in your trading name, to a script you approve. Recordings available. You keep aftercare calls and we take new enquiries.',
   },
   {
     id: 'diary',
     label: 'Diary managed',
-    body: 'Qualified callers become confirmed surveys in your calendar — confirmation call, reminders, reschedule handling, geographic clustering where possible.',
+    body: 'Qualified callers become confirmed surveys in your calendar, with a confirmation call, reminders, reschedule handling and geographic clustering where possible.',
   },
   {
     id: 'optimise',

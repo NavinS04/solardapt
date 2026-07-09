@@ -20,8 +20,8 @@ export default function ThankYouPage() {
           You’re all set.
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
-          Thanks — we’ve got your details. Keep an eye on your inbox and phone; we’ll reach out
-          shortly to confirm your free strategy call.
+          Thanks, we have your details. Keep an eye on your inbox and phone. We will reach out
+          shortly to confirm your free planning call.
         </p>
         <div className="mt-8">
           <Link href="/">

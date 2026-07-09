@@ -3,8 +3,8 @@ import Script from 'next/script';
 import { LeadForm } from '@/components/scenes/LeadForm';
 
 export const metadata: Metadata = {
-  title: 'Book a Free Strategy Call',
-  description: 'Book your free, no-obligation Solardapt strategy call.',
+  title: 'Book a Free Planning Call',
+  description: 'Book your free, no obligation Solardapt planning call.',
 };
 
 export default function BookPage() {
@@ -14,14 +14,14 @@ export default function BookPage() {
       <div className="container relative grid gap-12 pb-24 lg:grid-cols-2">
         <div>
           <h1 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-tight tracking-tight">
-            Book your free <span className="text-gradient">strategy call</span>
+            Book your free <span className="text-gradient">planning call</span>
           </h1>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">
-            No pitch, no obligation. We’ll audit your enquiry flow — ads, funnel, phones, diary —
-            and show you exactly where the money leaks and how we’d fix it.
+            No pitch and no obligation. We will map your enquiry flow, from ads to funnel to phones
+            to diary, and show you exactly where the money leaks and how we would fix it.
           </p>
           <ul className="mt-8 space-y-3 text-sm text-muted-foreground">
-            {['Postcode exclusivity checked for your districts', 'A tailored plan for a full, sorted survey diary', '30-day rolling terms — no long lock-in'].map((item) => (
+            {['Postcode exclusivity checked for your districts', 'A tailored plan for a full, sorted survey diary', '30 day rolling terms with no long contracts'].map((item) => (
               <li key={item} className="flex items-center gap-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-solar-500" />
                 {item}
@@ -59,8 +59,8 @@ export default function BookPage() {
               </span>
             </summary>
             <p className="mb-6 mt-2 text-sm text-muted-foreground">
-              Tell us about your business and what you want fixed — we&apos;ll come back to you the
-              same working day.
+              Tell us about your business and what you want fixed. We will come back to you the same
+              working day.
             </p>
             <LeadForm />
           </details>

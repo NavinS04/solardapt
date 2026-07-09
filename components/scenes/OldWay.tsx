@@ -9,7 +9,7 @@ const BROKEN = [
   {
     label: 'Shared-lead platforms',
     detail:
-      'GreenMatch, Bark, MyBuilder — the same homeowner sold to 3–6 firms, sick of the phone before you’ve even called.',
+      'GreenMatch, Bark and MyBuilder sell the same homeowner to several firms at once. They are sick of the phone before you have even called.',
   },
   {
     label: '“Free grant” clickbait',
@@ -19,7 +19,7 @@ const BROKEN = [
   {
     label: 'The missed-call graveyard',
     detail:
-      'Ads work, the phone rings — and rings out, because you’re on a roof. The enquiry goes cold within the hour.',
+      'Ads work and the phone rings. Then it rings out, because you are on a roof. The enquiry goes cold within the hour.',
   },
 ];
 
@@ -33,7 +33,7 @@ export function OldWay() {
         <SectionHeading
           eyebrow="The old way"
           title="Most installer campaigns don’t fail at the click."
-          subtitle="They fail at the phone. That’s the gap where your last marketing budget died."
+          subtitle="They fail at the phone. That is where your last marketing budget died."
         />
 
         <div ref={ref} className="mx-auto mt-16 grid max-w-4xl gap-4 md:grid-cols-3">

@@ -121,7 +121,7 @@ export function Hero() {
       </motion.div>
 
       {/* ── Content ───────────────────────────────────────────────────── */}
-      <motion.div style={{ y: contentY, opacity }} className="container relative pt-24 text-center">
+      <motion.div style={{ y: contentY, opacity }} className="container relative pt-28 text-center sm:pt-24">
         {/* Line 1 — eyebrow */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -169,9 +169,9 @@ export function Hero() {
           transition={{ duration: 0.6, ease: ease.out, delay: 0.95 }}
           className="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted-foreground"
         >
-          Not for one-van startups or shared-lead bargain hunters. We&apos;re the full front office —
-          ads, funnel, live call answering and confirmed surveys in your diary — for installers
-          serious about growth. One installer per postcode district.
+          Not for brand new startups or bargain lead buyers. We are the full front office. Ads,
+          funnel, live call answering and confirmed surveys in your diary, for installers serious
+          about growth. One installer per postcode district.
         </motion.p>
 
         <motion.div
@@ -180,12 +180,12 @@ export function Hero() {
           transition={{ duration: 0.6, ease: ease.out, delay: 1.1 }}
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <Magnetic>
-            <Button size="lg" onClick={() => (window.location.href = '/book')}>
-              Book Free Strategy Call <ArrowRight className="size-4" />
+          <Magnetic className="w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto" onClick={() => (window.location.href = '/book')}>
+              Book a Free Planning Call <ArrowRight className="size-4" />
             </Button>
           </Magnetic>
-          <Button size="lg" variant="secondary" onClick={() => setVslOpen(true)}>
+          <Button size="lg" variant="secondary" className="w-full sm:w-auto" onClick={() => setVslOpen(true)}>
             <Play className="size-4" /> Watch How It Works
           </Button>
         </motion.div>

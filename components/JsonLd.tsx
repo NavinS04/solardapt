@@ -27,7 +27,7 @@ export function JsonLd() {
       provider: { '@type': 'Organization', name: site.name },
       areaServed: site.markets,
       description:
-        'Done-for-you front office for solar installers: exclusive Meta advertising, conversion funnel, live call answering, qualification, and confirmed surveys booked into the installer\u2019s diary.',
+        'The front office for solar installers. Exclusive Meta advertising, conversion funnel, live call answering, qualification and confirmed surveys booked into the installer diary.',
     },
     {
       '@context': 'https://schema.org',
@@ -46,7 +46,7 @@ export function JsonLd() {
           name: 'Are the appointments exclusive?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. Exclusivity is contractual by postcode district — an enquiry generated in your districts is only ever booked to your business.',
+            text: 'Yes. Exclusivity is contractual by postcode district. An enquiry generated in your districts is only ever booked to your business.',
           },
         },
       ],

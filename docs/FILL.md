@@ -9,7 +9,7 @@ states until real data arrives.
 - [ ] Review-platform accounts + counts — flip the `NEXT_PUBLIC_BADGE_*` flags
       ON only when genuinely present
 - [ ] VSL video URL + poster image (`NEXT_PUBLIC_VSL_URL`, `/public/brand/vsl-poster.jpg`)
-- [ ] Real social URLs (FB/IG/LinkedIn/X/TikTok/YouTube) — `lib/site.ts`; omit any that don't exist
+- [x] Social URLs — Instagram, Facebook, TikTok, LinkedIn wired in `lib/site.ts`
 - [x] Business phone — +44 7427 845540 (`lib/site.ts`)
 - [ ] Pricing/terms (FAQ + Terms page)
 
