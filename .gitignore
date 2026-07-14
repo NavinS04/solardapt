@@ -24,6 +24,10 @@ npm-debug.log*
 # testing
 /coverage
 
+# leads scraper output (contains contact data — never commit)
+/leads-output/
+*.leads.json
+
 # vercel / turbo
 .vercel
 .turbo
