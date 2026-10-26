@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live demo | Solardapt</title>
+<meta name="description" content="Watch the Solar Survey Engine handle a homeowner enquiry end to end: qualification, instant reply, survey booking, reminders and no-show recovery.">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/demo.css">
+<script src="/assets/config.js" defer></script>
+<script src="/assets/demo.js" defer></script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Solardapt</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#engine">How it works</a>
+      <a class="btn btn-sun" data-book href="#">Book a planning call</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-main">
+  <div class="wrap">
+    <div class="demo-head">
+      <div>
+        <span class="eyebrow">Live demo</span>
+        <h1 class="demo-title">One enquiry, start to finish</h1>
+        <p class="lead">Left: what the homeowner sees. Right: what the installer gets. <strong>Brightfield Solar is a fictional installer. Nothing on this page is sent anywhere</strong>, and timings are sped up.</p>
+      </div>
+      <div class="demo-controls">
+        <button class="btn btn-sun" id="start">▶ Start the demo</button>
+        <button class="btn btn-ghost" id="reset">Reset</button>
+      </div>
+    </div>
+
+    <div class="stage">
+      <!-- Homeowner phone -->
+      <div class="phone-col">
+        <div class="col-label">Homeowner's phone</div>
+        <div class="phone" id="phone">
+          <div class="phone-bar"><span id="clock">09:41</span><span>●●● 5G</span></div>
+          <div class="notif" id="notif" hidden><b id="notif-from">Brightfield Solar</b><span id="notif-text"></span></div>
+          <div class="screen" id="screen"></div>
+        </div>
+      </div>
+
+      <!-- Installer console -->
+      <div class="console-col">
+        <div class="col-label">Installer's view</div>
+        <div class="pipeline" id="pipeline">
+          <div class="stage-box" data-stage="new"><span>New</span><b>0</b></div>
+          <div class="stage-box" data-stage="qualified"><span>Qualified</span><b>0</b></div>
+          <div class="stage-box" data-stage="booked"><span>Booked</span><b>0</b></div>
+          <div class="stage-box" data-stage="attended"><span>Attended</span><b>0</b></div>
+          <div class="stage-box out" data-stage="filtered"><span>Filtered out</span><b>0</b></div>
+        </div>
+        <div class="speed" id="speed" hidden>Enquiry → first text: <b id="speed-v">-</b> <small>(live system designed to reply within about a minute)</small></div>
+        <div class="alert-card" id="alert" hidden></div>
+        <ol class="timeline" id="timeline"><li class="empty">Press <b>Start the demo</b>, then answer as the homeowner. Try saying you rent, too.</li></ol>
+        <div class="after" id="after" hidden>
+          <button class="btn btn-ghost" id="ff-reminder">⏩ Skip to the day before</button>
+          <button class="btn btn-ghost" id="noshow">✕ Simulate a no-show</button>
+          <button class="btn btn-dark" id="report-btn">Show the weekly report</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="report" id="report" hidden>
+      <div class="report-head"><h2>Weekly report: Brightfield Solar</h2><span class="tag">Example figures showing the report format. Not client results.</span></div>
+      <div class="report-grid">
+        <div><span>Ad spend</span><b>£315</b></div>
+        <div><span>Enquiries</span><b>34</b></div>
+        <div><span>Qualified</span><b>21</b></div>
+        <div><span>Surveys booked</span><b>13</b></div>
+        <div><span>Surveys attended</span><b>10</b></div>
+        <div class="hl"><span>Cost per attended survey</span><b>£31.50</b></div>
+      </div>
+      <div class="funnel" aria-hidden="true">
+        <div style="--w:100%"><span>Enquiries 34</span></div>
+        <div style="--w:62%"><span>Qualified 21</span></div>
+        <div style="--w:38%"><span>Booked 13</span></div>
+        <div style="--w:29%"><span>Attended 10</span></div>
+      </div>
+      <p class="report-note"><b>What we changed this week:</b> paused the ad creative with the lowest qualified rate; moved Thursday survey slots to Saturday morning, where bookings were strongest. <b>Next week:</b> test a new headline in two postcode districts.</p>
+    </div>
+
+    <div class="demo-cta">
+      <h2>Want this running for your business?</h2>
+      <div class="btn-row" style="justify-content:center"><a class="btn btn-sun" data-book href="#">Book a planning call</a><a class="btn btn-ghost" href="/">Back to the homepage</a></div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
