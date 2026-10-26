@@ -5,16 +5,16 @@ import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/motion/Reveal';
 
-// Pain points straight from the ICP manual — UK installer vocabulary.
+// Where paid-for enquiries leak, in UK installer vocabulary.
 const PAINS = [
   'Shared leads sold to three or more competing firms',
-  '“Free solar grant” clickbait filling the diary with renters and grant tourists',
-  'Scaffold booked, then a no show. £600 to £1,200 gone before a panel is lifted',
-  'Enquiries ringing out to voicemail while you’re on a roof',
+  '“Free solar” clickbait filling the diary with renters',
+  'Enquiries landing at 2pm and 8pm, when nobody is at a desk',
+  'Call-backs the next morning, after the homeowner booked someone else',
+  'Surveys booked, then a no-show and a wasted drive',
+  'Old enquiries sitting in a spreadsheet, never worked',
+  'No idea what a booked survey actually costs you',
   'The November to January trough with crews still on payroll',
-  'Surveyors walking when the diary runs thin',
-  'Directory rankings you don’t control',
-  'Quoted-not-signed jobs nobody has time to chase',
 ];
 
 export function Problem() {
@@ -27,10 +27,10 @@ export function Problem() {
         <SectionHeading
           eyebrow="The problem"
           title="Empty diaries kill solar businesses."
-          subtitle="You don’t need clicks. You need sat surveys with people who actually own the roof."
+          subtitle="You don’t need more clicks. You need surveys that happen, with people who own the roof."
         />
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
           {/* Animated empty-diary + flat-lining revenue */}
           <Reveal>
             <div className="glass rounded-md p-6">
@@ -72,7 +72,7 @@ export function Problem() {
             </div>
           </Reveal>
 
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {PAINS.map((pain, i) => (
               <Reveal as="li" key={pain} delay={i * 0.05}>
                 <div className="flex items-start gap-3 rounded-md border border-border bg-bg-surface/50 p-4">

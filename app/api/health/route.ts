@@ -1,21 +1,18 @@
 import { NextResponse } from 'next/server';
+import { site } from '@/lib/site';
+import { leadForwardingConfigured } from '@/lib/lead-forward';
 
 export const dynamic = 'force-dynamic';
 
 /*
- * Uptime-friendly health probe. The backend is stateless (no datastore) — it
- * validates, fires conversion events and hands leads to GHL — so this simply
- * confirms the app is serving and whether the GHL handoff is configured.
+ * Health probe. The site is stateless, so this confirms it is serving and
+ * whether the enquiry webhook and booking link are set (values never shown).
  */
 export async function GET() {
-  const ghl =
-    process.env.GHL_MODE === 'api'
-      ? process.env.GHL_API_KEY
-        ? 'configured'
-        : 'unconfigured'
-      : process.env.GHL_INBOUND_WEBHOOK_URL
-        ? 'configured'
-        : 'unconfigured';
-
-  return NextResponse.json({ status: 'ok', ghl, ts: new Date().toISOString() });
+  return NextResponse.json({
+    status: 'ok',
+    leadWebhook: leadForwardingConfigured() ? 'configured' : 'unconfigured',
+    bookingLink: site.bookingUrl ? 'configured' : 'unconfigured',
+    ts: new Date().toISOString(),
+  });
 }

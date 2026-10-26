@@ -1,7 +1,8 @@
 import { site } from '@/lib/site';
+import { FAQS } from '@/lib/faqs';
 
-// Crawlable structured data (BUILD_SPEC §9). Review/AggregateRating are
-// intentionally omitted until real reviews exist.
+// Crawlable structured data. Review/AggregateRating are intentionally omitted
+// until real reviews exist.
 export function JsonLd() {
   const data = [
     {
@@ -11,8 +12,9 @@ export function JsonLd() {
       url: site.url,
       email: site.email,
       founder: { '@type': 'Person', name: site.founder },
-      areaServed: site.markets,
+      areaServed: { '@type': 'Country', name: 'United Kingdom' },
       description: site.description,
+      sameAs: Object.values(site.social),
     },
     {
       '@context': 'https://schema.org',
@@ -23,40 +25,23 @@ export function JsonLd() {
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      serviceType: 'Front-office growth partner for solar installers',
+      name: 'Solar Survey Engine',
+      serviceType: 'Enquiry-to-survey system for solar installers',
       provider: { '@type': 'Organization', name: site.name },
-      areaServed: site.markets,
+      areaServed: { '@type': 'Country', name: 'United Kingdom' },
       description:
-        'The front office for solar installers. Exclusive Meta advertising, conversion funnel, live call answering, qualification and confirmed surveys booked into the installer diary.',
+        'Exclusive Meta ads, qualifying questions, a reply to every homeowner within about a minute, self-serve survey booking, reminders, no-show recovery and a weekly spend-to-survey report.',
     },
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'Does Facebook advertising work for solar installers?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Yes — with solar-specific creative and qualification. Solardapt targets homeowners showing real intent and screens them before the call.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Are the appointments exclusive?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Yes. Exclusivity is contractual by postcode district. An enquiry generated in your districts is only ever booked to your business.',
-          },
-        },
-      ],
+      mainEntity: FAQS.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
     },
   ];
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }

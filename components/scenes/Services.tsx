@@ -4,38 +4,38 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
-// The engagement, stage by stage — land the core retainer, prove the diary
-// fills, then optimise everything upstream of the install (ICP §8).
+// From yes to live: the onboarding path, stage by stage. Target is live
+// within about 14 days of receiving access.
 const STAGES = [
   {
-    id: 'groundwork',
-    label: 'Groundwork',
-    body: 'We map your current enquiry flow, postcodes and economics, and find where money leaks between click and diary, before a penny goes on ads.',
+    id: 'call',
+    label: 'Walkthrough',
+    body: '20 minutes on your current enquiry flow, areas and numbers. You get a straight answer on whether this is a fit, and which postcode districts are still free.',
+  },
+  {
+    id: 'access',
+    label: 'Kick-off',
+    body: 'Agreement and data processing agreement signed. You give partner access to your Meta account, your survey availability and where alerts should go.',
   },
   {
     id: 'build',
-    label: 'Funnel build',
-    body: 'Landing funnel and qualification logic built for your service area and your model, whether that is private pay work or correctly screened grant work.',
+    label: 'Build',
+    body: 'Enquiry form and qualifying questions for your area and offer, the instant text and email, survey booking, reminders and the no-show route, all in your name.',
+  },
+  {
+    id: 'test',
+    label: 'Test',
+    body: 'Every path run end to end on a real phone before launch: a booked homeowner is never chased, STOP stops everything, nothing sends late at night.',
   },
   {
     id: 'launch',
     label: 'Ads live',
-    body: 'Exclusive Meta campaigns in your postcode districts. Controlled spend, one ad set first, instrumented end-to-end. Billed transparently.',
+    body: 'Daily budget agreed with you in writing first, paid by you directly to Meta. Enquiries start flowing into the system the same day.',
   },
   {
-    id: 'phones',
-    label: 'Phones answered',
-    body: 'Every enquiry answered live in your trading name, to a script you approve. Recordings available. You keep aftercare calls and we take new enquiries.',
-  },
-  {
-    id: 'diary',
-    label: 'Diary managed',
-    body: 'Qualified callers become confirmed surveys in your calendar, with a confirmation call, reminders, reschedule handling and geographic clustering where possible.',
-  },
-  {
-    id: 'optimise',
-    label: 'Optimise & scale',
-    body: 'We drive cost-per-confirmed-survey down and show-rate up, then scale spend only once the unit economics are proven in your numbers.',
+    id: 'report',
+    label: 'Weekly report',
+    body: 'Every week: spend, enquiries, qualified, booked, attended and cost per attended survey, plus a short call in the first month on what we are changing.',
   },
 ];
 
@@ -46,7 +46,7 @@ export function Services() {
   return (
     <section className="relative overflow-hidden bg-bg-1 py-28">
       <div className="container">
-        <SectionHeading eyebrow="The process" title="How we take over your front office." />
+        <SectionHeading eyebrow="Getting started" title="From yes to live in about 14 days." />
 
         <div className="mx-auto mt-16 max-w-4xl">
           {/* Timeline rail */}

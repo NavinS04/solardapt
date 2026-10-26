@@ -1,47 +1,32 @@
-// Pure ROI maths for the interactive calculator (BUILD_SPEC §6.6).
-// No PII, fully unit-testable, region-aware currency handled in the UI layer.
+// Pure maths for the "cost of slow follow-up" calculator.
+// Uses only the visitor's own inputs: no assumed uplift, no forecast of what
+// Solardapt will recover. Fully unit-testable, no PII.
 
 export interface CalculatorInput {
-  installsPerMonth: number;
-  averageJobValue: number;
-  currentCloseRate: number; // 0..1
+  enquiriesPerMonth: number;
+  slowShare: number; // 0..1, share not contacted within an hour
+  installRate: number; // 0..1, share of enquiries that become installs
+  profitPerInstall: number; // £
 }
 
 export interface CalculatorOutput {
-  extraAppointments: number;
-  addedMonthlyRevenue: number;
-  estimatedRoi: number; // multiple, e.g. 4.2x
-  revenueLost: number;
+  coldEnquiries: number;
+  installsAtStake: number;
+  valueAtStake: number;
 }
 
-// Conservative, transparent assumptions. Tunable via Content/CMS-lite defaults.
-export const CALC_ASSUMPTIONS = {
-  // Extra qualified appointments a dialled-in Meta funnel can add per month,
-  // expressed relative to current install volume. Deliberately conservative.
-  appointmentUpliftFactor: 1.5,
-  // Estimated monthly ad + management cost used for the ROI denominator.
-  estimatedMonthlyInvestment: 2500,
-  // Share of demand currently missed without a predictable pipeline.
-  missedDemandFactor: 0.6,
-};
+const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
 
-export function calculateRoi(input: CalculatorInput): CalculatorOutput {
-  const closeRate = Math.min(Math.max(input.currentCloseRate, 0), 1);
-  const installs = Math.max(input.installsPerMonth, 0);
-  const jobValue = Math.max(input.averageJobValue, 0);
+export function calculateLeakage(input: CalculatorInput): CalculatorOutput {
+  const enquiries = Math.max(input.enquiriesPerMonth, 0);
+  const profit = Math.max(input.profitPerInstall, 0);
 
-  const extraAppointments = Math.round(installs * CALC_ASSUMPTIONS.appointmentUpliftFactor);
-  const extraInstalls = extraAppointments * closeRate;
-  const addedMonthlyRevenue = Math.round(extraInstalls * jobValue);
+  const coldEnquiries = enquiries * clamp01(input.slowShare);
+  const installsAtStake = coldEnquiries * clamp01(input.installRate);
 
-  const estimatedRoi =
-    CALC_ASSUMPTIONS.estimatedMonthlyInvestment > 0
-      ? Number((addedMonthlyRevenue / CALC_ASSUMPTIONS.estimatedMonthlyInvestment).toFixed(1))
-      : 0;
-
-  const revenueLost = Math.round(
-    installs * CALC_ASSUMPTIONS.missedDemandFactor * jobValue,
-  );
-
-  return { extraAppointments, addedMonthlyRevenue, estimatedRoi, revenueLost };
+  return {
+    coldEnquiries: Math.round(coldEnquiries),
+    installsAtStake: Number(installsAtStake.toFixed(1)),
+    valueAtStake: Math.round(installsAtStake * profit),
+  };
 }

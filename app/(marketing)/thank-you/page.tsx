@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ThankYouTracking } from '@/components/scenes/ThankYouTracking';
 
 export const metadata: Metadata = {
   title: 'Thank you',
@@ -20,8 +19,8 @@ export default function ThankYouPage() {
           You’re all set.
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
-          Thanks, we have your details. Keep an eye on your inbox and phone. We will reach out
-          shortly to confirm your free planning call.
+          Thanks, your enquiry is with me. I reply within one working day, by email or phone,
+          whichever you prefer.
         </p>
         <div className="mt-8">
           <Link href="/">
@@ -29,7 +28,6 @@ export default function ThankYouPage() {
           </Link>
         </div>
       </div>
-      <ThankYouTracking />
     </section>
   );
 }

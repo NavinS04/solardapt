@@ -4,12 +4,12 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
-// The three ways installer marketing money dies (ICP §1.3, §3.3).
+// The four ways installer ad spend is lost after the click.
 const BROKEN = [
   {
     label: 'Shared-lead platforms',
     detail:
-      'GreenMatch, Bark and MyBuilder sell the same homeowner to several firms at once. They are sick of the phone before you have even called.',
+      'Aggregators sell the same homeowner to several firms at once. They are sick of the phone before you have even called.',
   },
   {
     label: '“Free grant” clickbait',
@@ -19,7 +19,12 @@ const BROKEN = [
   {
     label: 'The missed-call graveyard',
     detail:
-      'Ads work and the phone rings. Then it rings out, because you are on a roof. The enquiry goes cold within the hour.',
+      'The enquiry lands while your team is on a roof. By the time someone calls back, the homeowner has booked whoever rang first.',
+  },
+  {
+    label: 'Booked, then no-show',
+    detail:
+      'A survey in the diary is not a survey that happens. Without reminders and a rebooking route, the slot and the drive are wasted.',
   },
 ];
 
@@ -32,11 +37,11 @@ export function OldWay() {
       <div className="container">
         <SectionHeading
           eyebrow="The old way"
-          title="Most installer campaigns don’t fail at the click."
-          subtitle="They fail at the phone. That is where your last marketing budget died."
+          title="Ad spend isn’t lost at the click."
+          subtitle="It’s lost in the hour after, when nobody gets back to the homeowner in time."
         />
 
-        <div ref={ref} className="mx-auto mt-16 grid max-w-4xl gap-4 md:grid-cols-3">
+        <div ref={ref} className="mx-auto mt-16 grid grid-cols-1 max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {BROKEN.map((item, i) => (
             <motion.div
               key={item.label}
@@ -56,9 +61,15 @@ export function OldWay() {
             </motion.div>
           ))}
         </div>
-        <p className="mt-12 text-center text-lg text-muted-foreground">
-          There&apos;s a better way to fill the diary →
-        </p>
+        <figure className="mx-auto mt-14 max-w-2xl text-center">
+          <blockquote className="text-lg text-foreground">
+            “Firms that contacted online leads within an hour were nearly seven times as likely to
+            qualify them as firms that waited longer.”
+          </blockquote>
+          <figcaption className="mt-3 text-sm text-muted-foreground">
+            Harvard Business Review, 2011
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
