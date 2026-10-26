@@ -1,25 +1,27 @@
 import type { Metadata } from 'next';
 import { LegalPage } from '@/components/ui/LegalPage';
 
-export const metadata: Metadata = { title: 'Cookie Policy' };
+export const metadata: Metadata = { title: 'Cookies' };
 
 export default function Cookies() {
   return (
-    <LegalPage title="Cookie Policy" updated="June 2026">
+    <LegalPage title="Cookies" updated="27 October 2026">
       <p>
-        In line with PECR and the UK GDPR we use a granular consent manager (necessary, analytics,
-        marketing). No analytics or marketing cookies, including GA4, Google Tag Manager and the
-        Meta Pixel, load before you consent. You can change your choice at any time via the cookie
-        banner.
+        <strong>This website does not set any cookies</strong>, and we don’t use analytics, advertising or tracking
+        tools. That’s why there’s no cookie banner. Our fonts are served from this site, not from a third party.
       </p>
-      <h2>Categories</h2>
+      <h2>Third parties</h2>
       <p>
-        <strong>Necessary:</strong> required to run the site (always on).{' '}
-        <strong>Analytics:</strong> measure usage to improve the experience.{' '}
-        <strong>Marketing:</strong> measure ad performance and conversions.
+        The booking button takes you to Cal.com, which has its own cookie and privacy notice. Social media links take
+        you to those platforms, which have their own notices too.
       </p>
-      <h2>Global Privacy Control</h2>
-      <p>We honour GPC and Do-Not-Track browser signals as an opt-out of non-essential cookies.</p>
+      <p>
+        If we ever add analytics or similar tools, we’ll update this page and ask for your consent first where the law
+        requires it.
+      </p>
+      <p>
+        Questions? See our <a href="/privacy">privacy notice</a>.
+      </p>
     </LegalPage>
   );
 }

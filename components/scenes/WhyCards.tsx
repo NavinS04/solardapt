@@ -1,48 +1,48 @@
 'use client';
 
-import { MapPin, PhoneCall, ShieldCheck, CalendarCheck, Timer, Layers } from 'lucide-react';
+import { MapPin, ShieldCheck, CalendarCheck, CalendarClock, Timer, KeyRound } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Tilt } from '@/components/motion/Tilt';
 import { Reveal } from '@/components/motion/Reveal';
 
-// The six audit questions every installer asks, answered before they're asked
-// (ICP §5.2). These are commitments of scope/process, not performance claims.
+// The questions every installer asks, answered before they're asked. These
+// are commitments of scope and process, not performance claims.
 const CARDS = [
   {
     icon: MapPin,
-    title: 'Postcode district exclusivity',
+    title: 'One installer per postcode district',
     detail:
-      'Your districts are yours alone, in writing, in the agreement. One installer per area, capped as a matter of policy.',
-  },
-  {
-    icon: PhoneCall,
-    title: 'Your phone, answered live',
-    detail:
-      'Every enquiry answered in your trading name, to a script you approve word-for-word, with recordings you can review.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Screened before they are booked',
-    detail:
-      'Homeowner, roof basics and finance readiness, or genuine grant eligibility if that is your model. Grant tourists screened out.',
-  },
-  {
-    icon: CalendarCheck,
-    title: 'Show-rate protection',
-    detail:
-      'Confirmation call, reminder sequence and live reschedule handling, because a no show after scaffold is booked costs real money.',
+      'Your districts are yours alone, written into the agreement. We never sell or share your enquiries with anyone else.',
   },
   {
     icon: Timer,
-    title: '30 day rolling terms',
+    title: 'A reply within a minute',
     detail:
-      'No long contracts. Start with a bounded trial, then scale up or switch off on 30 days notice. You stay in control.',
+      'Text and email go to the homeowner automatically, day or evening, while your team is on a roof. Quiet hours respected.',
   },
   {
-    icon: Layers,
-    title: 'The whole front office',
+    icon: ShieldCheck,
+    title: 'Qualified before they are booked',
     detail:
-      'Ads, funnel, phones, qualification and diary. One partner, one number to call. Your only job is to send a surveyor.',
+      'Homeowner, property, roof, bill and timeframe, scored by fixed rules. Renters and browsers are thanked and filtered out.',
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Reminders and no-show recovery',
+    detail:
+      'Confirmation, a reminder the day before and on the morning, and an automatic rebooking route if someone misses it.',
+  },
+  {
+    icon: KeyRound,
+    title: 'Your ad account, your data',
+    detail:
+      'Ads run in your own Meta account and you pay Meta directly. Budgets change only with your written OK. Leave and take everything.',
+  },
+  {
+    icon: CalendarClock,
+    title: 'Rolling monthly, 30 days notice',
+    detail:
+      'No long contract. If the agreed service milestones are not delivered, you can pause the monthly fee until they are.',
   },
 ];
 
@@ -52,9 +52,9 @@ export function WhyCards() {
       <div className="container">
         <SectionHeading
           eyebrow="Why Solardapt"
-          title="Every question installers ask, answered up front."
+          title="What you get, in writing."
         />
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CARDS.map((card, i) => (
             <Reveal key={card.title} delay={i * 0.06}>
               <Tilt className="group h-full">

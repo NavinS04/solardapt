@@ -2,20 +2,35 @@ import type { Metadata } from 'next';
 import { LegalPage } from '@/components/ui/LegalPage';
 import { site } from '@/lib/site';
 
-export const metadata: Metadata = { title: 'Legal Notice' };
+export const metadata: Metadata = { title: 'Company Details' };
 
 export default function Legal() {
+  const { legal } = site;
+  const rows = [
+    ['Trading name', site.name],
+    ['Legal name', legal.name],
+    ['Company number', legal.companyNumber],
+    ['Address', legal.address],
+    ['ICO registration', legal.icoNumber],
+    ['Email', site.email],
+    ['Phone', site.phone],
+  ].filter(([, value]) => value);
+
   return (
-    <LegalPage title="Legal Notice / Imprint" updated="June 2026">
-      <p>‹FILL› registered company name, address, company number, VAT/registration and the
-        responsible person.</p>
-      <h2>Contact</h2>
-      <p>{site.email}</p>
-      <h2>GDPR &amp; CCPA disclosures</h2>
+    <LegalPage title="Company Details" updated="27 October 2026">
+      <table>
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label}>
+              <th>{label}</th>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <p>
-        See our <a href="/privacy">Privacy Policy</a> for the controller identity, data categories,
-        purposes, legal bases, retention, processors and how to exercise your rights, including the
-        California opt-out of sale/share.
+        We serve solar installers in the United Kingdom only. See our <a href="/privacy">privacy notice</a> for how we
+        handle personal data.
       </p>
     </LegalPage>
   );

@@ -1,66 +1,40 @@
 # Solardapt
 
-Production marketing website for **Solardapt** — a niche agency that generates
-exclusive, pre-qualified homeowner appointments for solar installers via Meta
-Ads. The landing page is the destination for paid Meta traffic; its job is to
-convert a cold solar-installer owner into a booked free strategy call.
+Marketing site for **Solardapt** and its product, the **Solar Survey Engine**: the
+system between an established UK solar installer's ad spend and a surveyor in the
+homeowner's living room. The site's jobs are to explain the offer, let an installer
+**try the system live at `/demo`**, and book a 20-minute walkthrough.
 
-## Architecture (thin backend, GHL is the system of record)
+## How it fits together
 
 ```
-Visitor (Meta, UTM + fbclid)
-  → submit lead form  (or book via Calendly)
-  → POST /api/lead
-       → validate (zod) + honeypot + rate-limit
-       → consent-gate + fire Meta CAPI / GA4 conversion (server-side, hashed PII)
-       → push lead to GoHighLevel via inbound webhook  (lib/ghl.ts)
-  → /thank-you (client-side conversion)
-GoHighLevel → nurture (SMS + email), pipeline, reminders, Calendly↔GHL sync
+Installer visits (cold call follow-up, LinkedIn, referral)
+  → homepage: problem, five stages, weekly report, calculator, founding programme, FAQ
+  → /demo: interactive walkthrough with a fictional installer (client-side only, sends nothing)
+  → /book: Cal.com link (NEXT_PUBLIC_BOOKING_URL) or email/phone
+           + optional enquiry form → POST /api/lead → Make.com webhook (LEAD_WEBHOOK_URL)
 ```
 
-**GoHighLevel (GHL) is the system of record** for leads, pipeline, nurture and
-reminders. This codebase only validates, gates on consent, fires conversion
-events and hands the lead to GHL. There is **no custom CRM, auth, database or
-messaging provider** in this repo.
+The site stores nothing. Enquiries go straight to Make, and the form only shows
+"thank you" once Make has accepted the enquiry. If the webhook isn't set, the form
+is hidden and visitors are offered email and phone instead.
 
 ## Stack
 
-- **Next.js 15** (App Router, RSC) · **React 19** · **TypeScript** (strict)
-- **Tailwind CSS** + design tokens · **Framer Motion** + **Lenis** smooth scroll
-- **GoHighLevel** lead handoff (inbound webhook; API mode stubbed)
-- **Meta CAPI** + GA4/GTM + Pixel conversion tracking (consent-gated)
-- **Calendly** booking embed (Calendly↔GHL sync configured inside GHL)
-- **Vitest** unit tests · **GitHub Actions** CI · Vercel-ready
-
-> Heavy 3D (Three.js/R3F) and GSAP ScrollTrigger from the original spec are
-> implemented with Framer Motion + Lenis for a guaranteed-buildable, performant
-> baseline. See `docs/MOTION.md` for the upgrade path.
+- **Next.js 15** (App Router) · **React 19** · **TypeScript** (strict)
+- **Tailwind CSS** + design tokens (`styles/tokens.css`) · **Framer Motion** + **Lenis**
+- **Vitest** unit tests · **GitHub Actions** CI · deployed on **Vercel**
 
 ## Quick start
 
 ```bash
 npm install
-cp .env.example .env   # fill what you have; the app runs with blanks
-npm run dev            # http://localhost:3000
+cp .env.example .env.local   # every value is optional; the site runs with blanks
+npm run dev                  # http://localhost:3000
 ```
 
-The app builds and runs with empty env. Conversion events and the GHL push
-become live once their env vars are supplied.
-
-## GHL setup (the only backend integration)
-
-1. In GHL, create a **Workflow** with an **Inbound Webhook** trigger.
-2. Copy the webhook URL into `GHL_INBOUND_WEBHOOK_URL`.
-3. Map the incoming fields to contact fields — the payload sends these exact
-   keys: `first_name`, `last_name`, `email`, `phone`, `business`,
-   `jobs_per_month`, `market`, `source`, `utm_source`, `utm_medium`,
-   `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `consent_given`,
-   `consent_timestamp` (plus `consent_ip` and `consent_policy_version` for
-   audit). These are defined in `GHLWebhookBody` in `lib/ghl.ts`.
-4. Build the nurture/pipeline/reminder workflows in GHL.
-5. Configure the **Calendly ↔ GHL** sync inside GHL (native integration).
-
-See `docs/RUNBOOK.md` for A2P 10DLC / email-sender auth (done in GHL).
+Environment variables are listed in `.env.example`. Set them in Vercel → Settings →
+Environment Variables, then redeploy. See `docs/RUNBOOK.md` for the Make scenario.
 
 ## Scripts
 
@@ -75,19 +49,20 @@ See `docs/RUNBOOK.md` for A2P 10DLC / email-sender auth (done in GHL).
 ## Structure
 
 ```
-app/(marketing)   landing, legal, /book, /thank-you
-app/api           lead capture, consent audit, health
+app/(marketing)    homepage, /demo, /book, /thank-you, legal pages
+app/api            lead (enquiry → Make), health
+components/demo    SurveyDemo: the interactive Solar Survey Engine demo
+components/scenes  homepage sections
 components/motion  MotionProvider, Reveal, Magnetic, Tilt, Counter
-components/scenes  hero, problem, engine, dashboard, calculator, map…
 components/ui      buttons, logo, headings, primitives
-lib                ghl, meta-capi, calculator, validators, rate-limit, site
-tests              unit tests (calculator, validators, ghl)
-docs               ARCHITECTURE, RUNBOOK, COMPLIANCE, MOTION, FILL index
+lib                site config, faqs, calculator, example report, validators, lead-forward
+tests              unit tests (calculator, validators, lead-forward)
+docs               RUNBOOK, MOTION
 ```
 
 ## Honesty policy
 
-No fabricated proof. Testimonials and review badges only render when real data
-is supplied (badges are env-flagged, default OFF). Illustrative dashboard /
-calculator figures are clearly labelled. Legal pages are templates requiring
-lawyer review.
+No invented proof. Solardapt has no client results yet and the site says so. The
+weekly report on the homepage and in the demo uses example figures, labelled as such.
+The calculator multiplies only the visitor's own inputs: it is not a forecast. No
+guarantees of surveys, installs or revenue anywhere on the site.

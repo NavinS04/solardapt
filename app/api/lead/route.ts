@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { randomUUID } from 'node:crypto';
 import { leadSchema } from '@/lib/validators';
 import { rateLimit } from '@/lib/rate-limit';
-import { sendMetaCapiEvent } from '@/lib/meta-capi';
-import { pushLeadToGHL, toGHLPayload } from '@/lib/ghl';
+import { forwardLead, toLeadPayload } from '@/lib/lead-forward';
 
 /*
- * Public lead-capture endpoint (thin backend).
- *   validate (zod + honeypot) → rate-limit → consent-gate conversion →
- *   fire Meta CAPI → push lead to GHL (system of record) → return success.
- * GHL workflows then own nurture (SMS + email), pipeline and reminders.
- * A GHL failure never blocks the visitor — the lead is logged for recovery.
+ * Public enquiry endpoint: validate (zod + honeypot) → rate-limit → forward to
+ * the Make.com webhook. Success is only returned once Make has accepted the
+ * enquiry; otherwise the form tells the visitor to email or call instead.
  */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
-  const ua = req.headers.get('user-agent') ?? undefined;
-  const policyVersion = process.env.POLICY_VERSION ?? 'unversioned';
 
   const limit = rateLimit(`lead:${ip}`, 5, 60_000);
   if (!limit.ok) {
@@ -37,32 +31,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const data = parsed.data;
-
   // Honeypot — silently accept to avoid tipping off bots.
-  if (data.company_website) {
+  if (parsed.data.company_website) {
     return NextResponse.json({ ok: true });
   }
 
-  const eventId = randomUUID();
-
-  // Fire server-side conversion only with marketing consent (deduped with the
-  // Pixel via eventId). Consent is captured client-side and forwarded here.
-  if (data.consentMarketing) {
-    await sendMetaCapiEvent({
-      eventName: 'Lead',
-      eventId,
-      email: data.email,
-      phone: data.phone,
-      fbclid: data.fbclid,
-      clientIp: ip,
-      userAgent: ua,
-    });
+  const result = await forwardLead(toLeadPayload(parsed.data));
+  if (!result.ok) {
+    return NextResponse.json({ error: result.reason }, { status: result.reason === 'not_configured' ? 503 : 502 });
   }
-
-  // Hand the lead to GHL. Consent + attribution travel as custom fields so GHL
-  // remains the auditable record. Never block the visitor on failure.
-  const ghl = await pushLeadToGHL(toGHLPayload(data, { ip, policyVersion }));
-
-  return NextResponse.json({ ok: true, eventId, forwarded: ghl.ok });
+  return NextResponse.json({ ok: true });
 }

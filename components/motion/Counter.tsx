@@ -22,19 +22,26 @@ export function Counter({
   const inView = useInView(ref, { once: true });
   const reduced = useReducedMotionSafe();
   const [display, setDisplay] = useState(0);
+  // Last value shown, so a changed target animates from where it is, not from 0.
+  const shownRef = useRef(0);
 
   useEffect(() => {
     if (!inView) return;
     if (reduced) {
+      shownRef.current = value;
       setDisplay(value);
       return;
     }
     let raf = 0;
+    const from = shownRef.current;
+    const ms = (from === 0 ? duration : Math.min(duration, 0.4)) * 1000;
     const start = performance.now();
     const tick = (now: number) => {
-      const t = Math.min((now - start) / (duration * 1000), 1);
+      const t = Math.min((now - start) / ms, 1);
       const eased = 1 - Math.pow(1 - t, 3);
-      setDisplay(value * eased);
+      const next = from + (value - from) * eased;
+      shownRef.current = next;
+      setDisplay(next);
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

@@ -15,12 +15,12 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
-    'solar appointments UK',
-    'exclusive solar leads',
-    'solar installer marketing',
-    'appointment setting for solar installers',
-    'solar call handling and diary management',
-    'MCS installer lead generation',
+    'solar installer enquiries UK',
+    'booked solar surveys',
+    'exclusive solar enquiries',
+    'speed to lead for solar installers',
+    'solar survey booking system',
+    'MCS installer survey bookings',
   ],
   authors: [{ name: site.founder }],
   openGraph: {
@@ -29,13 +29,12 @@ export const metadata: Metadata = {
     description: site.description,
     url: site.url,
     siteName: site.name,
-    images: [{ url: '/brand/og.png', width: 1200, height: 630, alt: site.name }],
+    locale: 'en_GB',
   },
   twitter: {
     card: 'summary_large_image',
     title: `${site.name} · ${site.tagline}`,
     description: site.description,
-    images: ['/brand/og.png'],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: site.url },
@@ -49,7 +48,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
       <body className="min-h-screen font-sans">
         <a
           href="#main"

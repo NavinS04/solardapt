@@ -1,26 +1,28 @@
 import { describe, it, expect } from 'vitest';
-import { calculateRoi } from '@/lib/calculator';
+import { calculateLeakage } from '@/lib/calculator';
 
-describe('calculateRoi', () => {
-  it('produces more appointments than current installs', () => {
-    const r = calculateRoi({ installsPerMonth: 10, averageJobValue: 8000, currentCloseRate: 0.3 });
-    expect(r.extraAppointments).toBeGreaterThan(10);
+describe('calculateLeakage', () => {
+  it('multiplies only the visitor inputs', () => {
+    const r = calculateLeakage({ enquiriesPerMonth: 40, slowShare: 0.4, installRate: 0.1, profitPerInstall: 2500 });
+    expect(r.coldEnquiries).toBe(16);
+    expect(r.installsAtStake).toBe(1.6);
+    expect(r.valueAtStake).toBe(4000);
   });
 
-  it('scales added revenue with job value and close rate', () => {
-    const low = calculateRoi({ installsPerMonth: 10, averageJobValue: 5000, currentCloseRate: 0.2 });
-    const high = calculateRoi({ installsPerMonth: 10, averageJobValue: 15000, currentCloseRate: 0.4 });
-    expect(high.addedMonthlyRevenue).toBeGreaterThan(low.addedMonthlyRevenue);
+  it('is zero when every enquiry is contacted within the hour', () => {
+    const r = calculateLeakage({ enquiriesPerMonth: 100, slowShare: 0, installRate: 0.2, profitPerInstall: 3000 });
+    expect(r.valueAtStake).toBe(0);
   });
 
   it('handles zeros without NaN', () => {
-    const r = calculateRoi({ installsPerMonth: 0, averageJobValue: 0, currentCloseRate: 0 });
-    expect(Number.isFinite(r.addedMonthlyRevenue)).toBe(true);
-    expect(r.addedMonthlyRevenue).toBe(0);
+    const r = calculateLeakage({ enquiriesPerMonth: 0, slowShare: 0, installRate: 0, profitPerInstall: 0 });
+    expect(Number.isFinite(r.valueAtStake)).toBe(true);
+    expect(r.valueAtStake).toBe(0);
   });
 
-  it('clamps close rate above 100%', () => {
-    const r = calculateRoi({ installsPerMonth: 5, averageJobValue: 8000, currentCloseRate: 1.5 });
-    expect(Number.isFinite(r.estimatedRoi)).toBe(true);
+  it('clamps shares above 100% and below 0%', () => {
+    const r = calculateLeakage({ enquiriesPerMonth: 10, slowShare: 1.5, installRate: -0.2, profitPerInstall: 2000 });
+    expect(r.coldEnquiries).toBe(10);
+    expect(r.valueAtStake).toBe(0);
   });
 });

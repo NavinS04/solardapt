@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { MARKETS } from '@/lib/validators';
+import { site } from '@/lib/site';
 
-/** Short "request a call" form. CAPTCHA/honeypot + rate limiting on the server. */
+/** Short enquiry form. Honeypot + rate limiting on the server. */
 export function LeadForm() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -15,7 +15,7 @@ export function LeadForm() {
     setErrors({});
     const form = new FormData(e.currentTarget);
 
-    // Capture Meta tracking params from the URL for attribution.
+    // Capture campaign params from the URL for attribution.
     const params = new URLSearchParams(window.location.search);
     const utm: Record<string, string> = {};
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
@@ -29,20 +29,23 @@ export function LeadForm() {
       email: form.get('email'),
       phone: form.get('phone'),
       jobsPerMonth: form.get('jobsPerMonth') ? Number(form.get('jobsPerMonth')) : undefined,
-      market: form.get('market') || undefined,
       message: form.get('message') || undefined,
       company_website: form.get('company_website'), // honeypot
-      source: 'meta',
-      fbclid: params.get('fbclid') ?? undefined,
+      page: window.location.pathname,
       utm: Object.keys(utm).length ? utm : undefined,
-      consentMarketing: form.get('consent') === 'on',
     };
 
-    const res = await fetch('/api/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    let res: Response;
+    try {
+      res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      setStatus('error');
+      return;
+    }
 
     if (res.ok) {
       window.location.href = '/thank-you';
@@ -72,26 +75,7 @@ export function LeadForm() {
       <Field label="Email" name="email" type="email" required errors={errors.email} />
       <Field label="Phone" name="phone" type="tel" required errors={errors.phone} />
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Installs / month" name="jobsPerMonth" type="number" errors={errors.jobsPerMonth} />
-        <div>
-          <label htmlFor="market" className="mb-1.5 block text-sm font-medium">
-            Market
-          </label>
-          <select
-            id="market"
-            name="market"
-            className="h-11 w-full rounded-md border border-input bg-bg-surface px-3 text-sm outline-none focus:border-solar-500"
-          >
-            <option value="">Select…</option>
-            {MARKETS.map((m) => (
-              <option key={m} value={m}>
-                {m.replace('_', ' ')}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <Field label="Installs per month (roughly)" name="jobsPerMonth" type="number" errors={errors.jobsPerMonth} />
 
       <div>
         <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
@@ -107,20 +91,29 @@ export function LeadForm() {
         />
       </div>
 
-      <label className="flex items-start gap-2 text-xs text-muted-foreground">
-        <input type="checkbox" name="consent" className="mt-0.5 accent-[var(--solar-500)]" />
-        I agree to be contacted about my enquiry and accept the{' '}
+      <p className="text-xs text-muted-foreground">
+        We use these details only to reply to your enquiry. See our{' '}
         <a href="/privacy" className="underline">
-          privacy policy
+          privacy notice
         </a>
         .
-      </label>
+      </p>
 
       <Button type="submit" size="lg" className="w-full" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : 'Request my planning call'}
+        {status === 'sending' ? 'Sending…' : 'Send my enquiry'}
       </Button>
       {status === 'error' && Object.keys(errors).length === 0 && (
-        <p className="text-sm text-error">Something went wrong. Please try again.</p>
+        <p className="text-sm text-error" role="alert">
+          Sorry, that didn&apos;t go through. Please email{' '}
+          <a href={`mailto:${site.email}`} className="underline">
+            {site.email}
+          </a>{' '}
+          or call{' '}
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="underline">
+            {site.phone}
+          </a>
+          .
+        </p>
       )}
     </form>
   );

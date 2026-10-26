@@ -1,85 +1,46 @@
 # Runbook
 
-## Deploy (Vercel)
+## Environment variables (Vercel → Settings → Environment Variables)
 
-1. Import the repo into Vercel.
-2. Set environment variables from `.env.example` (Production + Preview). The only
-   required integration for the lead flow is `GHL_INBOUND_WEBHOOK_URL`.
-3. Build command `npm run build`. No database migrations — the app is stateless.
-4. `vercel.json` registers an hourly cron hitting `/api/health`.
+All optional; see `.env.example`. After changing any of them, redeploy
+(Deployments → latest → ⋯ → Redeploy), because `NEXT_PUBLIC_*` values are baked
+in at build time.
 
-## Local bootstrap
+| Variable | What it does when set |
+| --- | --- |
+| `NEXT_PUBLIC_BOOKING_URL` | /book shows a "Choose a time" button to your Cal.com event |
+| `LEAD_WEBHOOK_URL` | /book shows the enquiry form; enquiries POST to this Make webhook |
+| `LEAD_WEBHOOK_SECRET` | Sent as `x-solardapt-secret`; filter on it in Make |
+| `NEXT_PUBLIC_LEGAL_NAME`, `_ADDRESS`, `NEXT_PUBLIC_COMPANY_NUMBER`, `NEXT_PUBLIC_ICO_NUMBER` | Shown on /privacy and /legal |
 
-```bash
-npm i && npm run dev
-```
+Old variables from the GHL/Calendly/Meta version (`GHL_*`, `CALENDLY_*`,
+`NEXT_PUBLIC_CALENDLY_URL`, `META_*`, `NEXT_PUBLIC_META_PIXEL_ID`, `NEXT_PUBLIC_GA4_ID`,
+`NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_VSL_URL`, `NEXT_PUBLIC_BADGE_*`, `SENTRY_DSN`,
+`POLICY_VERSION`) are no longer read and can be deleted.
 
-## GoHighLevel setup
+## Make scenario for the enquiry form
 
-1. **Inbound webhook:** create a GHL Workflow with an *Inbound Webhook* trigger;
-   put its URL in `GHL_INBOUND_WEBHOOK_URL`. Map incoming fields → contact
-   fields (exact keys): `first_name`, `last_name`, `email`, `phone`, `business`,
-   `jobs_per_month`, `market`, `source`, `utm_source`, `utm_medium`,
-   `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `consent_given`,
-   `consent_timestamp`, `consent_ip`, `consent_policy_version`. The contract is
-   defined by `GHLWebhookBody` in `lib/ghl.ts` — keep this mapping in sync.
-2. **Nurture & pipeline:** build SMS + email sequences, pipeline stages and
-   reminders as GHL workflows. None of this lives in the website.
-3. **Calendly ↔ GHL (two parts):**
-   - **Contact + automation:** the site hosts a Calendly webhook bridge at
-     `/api/webhooks/calendly`. Create the subscription with a Calendly personal
-     access token:
+1. Make → Create scenario → **Webhooks → Custom webhook** → Add → copy the URL.
+2. Put it in `LEAD_WEBHOOK_URL` in Vercel and redeploy.
+3. Submit a test enquiry on /book so Make learns the data structure. Fields:
+   `name`, `business`, `email`, `phone`, `installs_per_month`, `message`, `page`,
+   `utm_*`, `received_at`.
+4. If you set `LEAD_WEBHOOK_SECRET`, add a filter after the webhook:
+   header `x-solardapt-secret` equals your secret.
+5. Next module: **Microsoft 365 Email → Send an email** to yourself (or a row in your
+   pipeline sheet). Turn the scenario on.
+6. Test again: you should get the email, and the visitor should see /thank-you.
+   With the scenario off, the visitor sees "email or call instead": no enquiry is
+   ever lost silently.
 
-     ```bash
-     curl -X POST https://api.calendly.com/webhook_subscriptions \
-       -H "Authorization: Bearer $CALENDLY_PAT" -H "Content-Type: application/json" \
-       -d '{
-         "url": "https://solardapt.com/api/webhooks/calendly",
-         "events": ["invitee.created", "invitee.canceled"],
-         "organization": "<your organization URI from GET /users/me>",
-         "scope": "organization"
-       }'
-     ```
+## Health check
 
-     Put the returned `signing_key` in `CALENDLY_WEBHOOK_SIGNING_KEY`. Each
-     booking then lands in GHL (via `GHL_BOOKING_WEBHOOK_URL`, falling back to
-     the main inbound webhook) with phone, message, booking time and
-     `booking_status`, and fires a Meta CAPI `Schedule` event.
-   - **Calendar view sync:** connect the *same Google Calendar* to both tools —
-     Calendly (event type → calendar connection) writes bookings into it, and
-     GHL (Settings → Calendars → Connections) two-way syncs it, so the slot
-     shows and blocks availability in both diaries.
-   - **Invitee questions:** in the Calendly event type, add a required "Phone
-     number" question and a "What would you like to discuss?" question — the
-     bridge picks both up automatically.
-4. **Messaging compliance (in GHL):** complete **A2P 10DLC** registration for
-   SMS and **email sender domain authentication** (SPF/DKIM) inside GHL before
-   sending nurture. STOP/HELP and unsubscribe are handled by GHL.
+`GET /api/health` → `{ status, leadWebhook, bookingLink }` shows whether the webhook
+and booking link are set (values are never shown).
 
-## Switching GHL to API mode (later)
+## Release checks
 
-Set `GHL_MODE=api` and supply `GHL_API_KEY` + `GHL_LOCATION_ID`, then implement
-the stubbed `api` branch in `lib/ghl.ts`. No caller changes are required.
-
-## Rotating keys
-
-All secrets live in Vercel env vars. To rotate: update the value, redeploy. The
-integration layer reads `process.env` at request time. Affected: GHL webhook/API,
-Meta CAPI, GA4/GTM, Sentry.
-
-## Fulfilling data-subject requests (GDPR/CCPA)
-
-Lead data lives in **GoHighLevel**. The website keeps no lead copy.
-
-1. Requests arrive via the contact email on the legal pages.
-2. **Export:** locate the contact in GHL and export their record + activity.
-3. **Delete:** delete/anonymise the contact in GHL.
-4. Consent audit lines (`CONSENT_AUDIT`) are in the host logs / Sentry if a fuller
-   trail is needed.
-5. Record completion per your internal process.
-
-## Incident basics
-
-- Health: `GET /api/health` reports whether the GHL handoff is configured.
-- Errors: wire `SENTRY_DSN` for FE+BE capture; `pushLeadToGHL` already logs
-  failed leads with full payload for manual recovery.
+- [ ] Homepage, /demo, /book, /privacy load; demo runs end to end (book, no-show, renter, report)
+- [ ] "Book a planning call" reaches Cal.com (or shows email + phone)
+- [ ] Enquiry form: success → /thank-you and a Make run; failure → email/phone message
+- [ ] Social preview: paste solardapt.com into WhatsApp/LinkedIn and check the card
