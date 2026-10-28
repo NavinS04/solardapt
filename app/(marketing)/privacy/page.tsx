@@ -23,8 +23,8 @@ export default function Privacy() {
         {legal.name ? (
           <>
             {site.name} is a trading name of {legal.name}
-            {legal.companyNumber && ` (company number ${legal.companyNumber})`}
-            {legal.address && `, of ${legal.address}`}.
+            {legal.companyNumber && `, a company registered in ${legal.registeredIn} (number ${legal.companyNumber})`}
+            {legal.address && `, registered office ${legal.address}`}.
           </>
         ) : (
           <>{site.name} is run by {site.founder}.</>
