@@ -3,14 +3,14 @@
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 
 const ITEMS = [
-  'Postcode exclusive',
-  'Live call answering',
-  'Confirmed surveys',
-  'Show rate protection',
-  'Screened enquiries',
-  '30 day rolling terms',
-  'Your script, your rules',
-  'UK based',
+  'One installer per postcode district',
+  'Reply within a minute',
+  'Self-serve survey booking',
+  'Reminders and no-show recovery',
+  'Renters filtered out',
+  'Weekly spend-to-survey report',
+  'Your ad account, your data',
+  'Rolling monthly, 30 days notice',
 ];
 
 /** Kinetic keyword strip under the hero — content duplicated for a seamless

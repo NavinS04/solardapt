@@ -7,8 +7,8 @@ import { Dashboard } from '@/components/scenes/Dashboard';
 import { Calculator } from '@/components/scenes/Calculator';
 import { WhyCards } from '@/components/scenes/WhyCards';
 import { Services } from '@/components/scenes/Services';
-import { WorldMap } from '@/components/scenes/WorldMap';
 import { SocialProof } from '@/components/scenes/SocialProof';
+import { Founding } from '@/components/scenes/Founding';
 import { Faq } from '@/components/scenes/Faq';
 import { FinalCta } from '@/components/scenes/FinalCta';
 import { JsonLd } from '@/components/JsonLd';
@@ -25,9 +25,9 @@ export default function HomePage() {
       <Dashboard />
       <Calculator />
       <WhyCards />
-      <Services />
-      <WorldMap />
       <SocialProof />
+      <Services />
+      <Founding />
       <Faq />
       <FinalCta />
     </>

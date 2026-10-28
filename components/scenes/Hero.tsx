@@ -7,19 +7,19 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Play, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useRef } from 'react';
+import Link from 'next/link';
+import { MousePointerClick, ArrowRight } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 import { Magnetic } from '@/components/motion/Magnetic';
 import { ease } from '@/lib/motion';
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
-import { VslModal } from './VslModal';
 
 /*
  * Hero structure (per owner spec):
  *   line 1 — eyebrow: who this is for
- *   line 2 — headline: the goal of the installers we target
- *   line 3 — sub-headline: who we are NOT for
+ *   line 2 — headline: the outcome installers buy
+ *   line 3 — sub-headline: what the system does, and who it is not for
  *
  * Scene layers (back → front): star field → aurora blobs → rotating light
  * rays → rising sun glow → perspective horizon grid → content. The whole
@@ -27,7 +27,7 @@ import { VslModal } from './VslModal';
  * transform/opacity only and collapses to a static backdrop under
  * prefers-reduced-motion.
  */
-const HEADLINE = ['A', 'Full', 'Diary.', 'Booked', 'Crews.', 'Predictable', 'Revenue.'];
+const HEADLINE = ['Booked', 'solar', 'surveys.'];
 
 // Deterministic pseudo-random star placement (stable between server/client).
 const STARS = Array.from({ length: 46 }, (_, i) => ({
@@ -40,7 +40,6 @@ const STARS = Array.from({ length: 46 }, (_, i) => ({
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotionSafe();
-  const [vslOpen, setVslOpen] = useState(false);
 
   // Scroll parallax
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -133,11 +132,11 @@ export function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
           </span>
-          For established residential solar installers
+          For established UK solar installers
         </motion.p>
 
         {/* Line 2 — headline (goal), masked word-by-word + sheen kicker */}
-        <h1 className="mx-auto max-w-4xl font-display text-[clamp(2.75rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
+        <h1 className="mx-auto max-w-5xl font-display text-[clamp(2.6rem,7vw,5rem)] font-bold leading-[0.98] tracking-tight">
           {HEADLINE.map((word, i) => (
             <span key={i} className="mr-[0.25em] inline-block overflow-hidden pb-1 align-bottom">
               <motion.span
@@ -157,7 +156,7 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 0.9, ease: ease.out, delay: 0.15 + HEADLINE.length * 0.08 }}
             >
-              Even in November.
+              Not more leads.
             </motion.span>
           </span>
         </h1>
@@ -167,11 +166,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: ease.out, delay: 0.95 }}
-          className="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted-foreground"
+          className="mx-auto mt-6 max-w-2xl text-balance text-lg text-foreground/85 [text-shadow:0_1px_12px_rgba(11,14,18,0.9)]"
         >
-          Not for brand new startups or bargain lead buyers. We are the full front office. Ads,
-          funnel, live call answering and confirmed surveys in your diary, for installers serious
-          about growth. One installer per postcode district.
+          We build and run the system between your ad spend and a surveyor in the homeowner&apos;s
+          living room. Every enquiry gets a reply within a minute, is qualified, books its own
+          survey and is reminded until it turns up. One installer per postcode district.
         </motion.p>
 
         <motion.div
@@ -181,13 +180,13 @@ export function Hero() {
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <Magnetic className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto" onClick={() => (window.location.href = '/book')}>
-              Book a Free Planning Call <ArrowRight className="size-4" />
-            </Button>
+            <Link href="/book" className={buttonVariants({ size: 'lg', className: 'w-full sm:w-auto' })}>
+              Book a 20-Minute Walkthrough <ArrowRight className="size-4" />
+            </Link>
           </Magnetic>
-          <Button size="lg" variant="secondary" className="w-full sm:w-auto" onClick={() => setVslOpen(true)}>
-            <Play className="size-4" /> Watch How It Works
-          </Button>
+          <Link href="/demo" className={buttonVariants({ size: 'lg', variant: 'secondary', className: 'w-full sm:w-auto' })}>
+            <MousePointerClick className="size-4" /> Try the Live Demo
+          </Link>
         </motion.div>
       </motion.div>
 
@@ -205,7 +204,6 @@ export function Hero() {
         </motion.div>
       )}
 
-      <VslModal open={vslOpen} onClose={() => setVslOpen(false)} />
     </section>
   );
 }

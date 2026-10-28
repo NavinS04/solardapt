@@ -3,66 +3,71 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Counter } from '@/components/motion/Counter';
 import { Badge } from '@/components/ui/Badge';
+import { EXAMPLE_CHANGES, EXAMPLE_REPORT, exampleCostPerAttended } from '@/lib/example-report';
 
-// NOTE: illustrative sample data only — clearly labelled, never presented as a
-// real client result. Replace with verified numbers when they exist.
-const BARS = [24, 38, 31, 52, 47, 63, 71, 68, 84];
+// The weekly report every client gets, shown with example figures.
+const STAGES = [
+  { label: 'Enquiries', value: EXAMPLE_REPORT.enquiries },
+  { label: 'Qualified', value: EXAMPLE_REPORT.qualified },
+  { label: 'Surveys booked', value: EXAMPLE_REPORT.booked },
+  { label: 'Surveys attended', value: EXAMPLE_REPORT.attended },
+];
 
 export function Dashboard() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-15% 0px' });
 
   return (
-    <section id="results" className="relative overflow-hidden bg-bg-1 py-28 scroll-mt-24">
+    <section id="report" className="relative scroll-mt-24 overflow-hidden bg-bg-1 py-28">
       <div className="container">
         <SectionHeading
-          eyebrow="The outcome"
-          title="What a sorted diary looks like."
-          subtitle="Confirmed surveys climbing, crews routed efficiently and revenue you can forecast through the winter, not just the summer."
+          eyebrow="The weekly report"
+          title="Cost per attended survey. Not cost per click."
+          subtitle="One page, every week, in plain numbers, with what we changed and why. You judge the system on surveys that actually happened."
         />
 
         <div ref={ref} className="mx-auto mt-16 max-w-5xl">
           <div className="mb-4 flex justify-end">
-            <Badge>Illustrative sample data</Badge>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              { label: 'Confirmed surveys / month', value: 28, suffix: '' },
-              { label: 'Show rate', value: 78, suffix: '%' },
-              { label: 'Diary booked ahead', value: 100, suffix: '%' },
-            ].map((stat) => (
-              <div key={stat.label} className="glass rounded-md p-6 text-center">
-                <div className="font-display text-4xl font-bold text-gradient">
-                  <Counter value={stat.value} suffix={stat.suffix} />
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
-              </div>
-            ))}
+            <Badge>Example figures showing the format. Not client results.</Badge>
           </div>
 
-          {/* Climbing surveys chart */}
-          <div className="mt-6 glass rounded-md p-6">
-            <div className="mb-6 flex items-center justify-between">
-              <span className="text-sm font-medium">Confirmed surveys, week by week</span>
-              <span className="text-xs text-success">▲ Trending up</span>
+          <div className="glass rounded-md p-6 sm:p-8">
+            <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4">
+              <span className="font-medium">Weekly report: example installer</span>
+              <span className="text-sm text-muted-foreground">
+                Ad spend <b className="text-foreground">£{EXAMPLE_REPORT.spend}</b>
+              </span>
             </div>
-            <div className="flex h-48 items-end gap-3">
-              {BARS.map((h, i) => (
-                <motion.div
-                  key={i}
-                  className="flex-1 rounded-t bg-solar-gradient"
-                  initial={{ height: 0 }}
-                  animate={inView ? { height: `${h}%` } : {}}
-                  transition={{ delay: i * 0.08, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                />
+
+            <ol className="space-y-3" aria-label="Enquiry to attended survey funnel">
+              {STAGES.map((stage, i) => (
+                <li key={stage.label} className="flex items-center gap-4">
+                  <span className="w-32 shrink-0 text-sm text-muted-foreground sm:w-40">{stage.label}</span>
+                  <div className="h-10 flex-1 overflow-hidden rounded-sm bg-white/5">
+                    <motion.div
+                      className="flex h-full items-center justify-end rounded-sm bg-solar-gradient pr-3 text-sm font-semibold text-white"
+                      initial={{ width: 0 }}
+                      animate={inView ? { width: `${(stage.value / EXAMPLE_REPORT.enquiries) * 100}%` } : {}}
+                      transition={{ delay: 0.15 + i * 0.12, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      {stage.value}
+                    </motion.div>
+                  </div>
+                </li>
               ))}
+            </ol>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-[auto_1fr] sm:items-center">
+              <div className="rounded-md bg-bg-0 px-6 py-4 text-center">
+                <div className="font-display text-3xl font-bold text-gradient">£{exampleCostPerAttended.toFixed(2)}</div>
+                <p className="mt-1 text-xs text-muted-foreground">Cost per attended survey</p>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                <b className="text-foreground">What we changed this week:</b> {EXAMPLE_CHANGES.changed}{' '}
+                <b className="text-foreground">Next week:</b> {EXAMPLE_CHANGES.next}
+              </p>
             </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              The comparison that matters: an exclusive, screened, confirmed survey converts at a
-              different order of magnitude to a shared lead sold to five of your competitors.
-            </p>
           </div>
         </div>
       </div>

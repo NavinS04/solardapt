@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SITE_URL: https://solardapt.com
-      GHL_MODE: webhook
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

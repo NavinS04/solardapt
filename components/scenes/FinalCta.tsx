@@ -1,8 +1,9 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Magnetic } from '@/components/motion/Magnetic';
 import { SunArc } from '@/components/ui/SunArc';
 
@@ -22,19 +23,21 @@ export function FinalCta() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-3xl font-display text-[clamp(2.25rem,6vw,4.5rem)] font-bold leading-[1.02] tracking-tight"
         >
-          Ready for a diary that <span className="text-gradient">fills itself?</span>
+          Stop paying for enquiries <span className="text-gradient">nobody follows up.</span>
         </motion.h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-          A free, no obligation planning call. We will map your enquiry flow, show you exactly where
-          enquiries are dying and reserve your postcode districts if we are a fit. 30 day rolling
-          terms if you go ahead.
+          A 20-minute walkthrough. We look at how your enquiries are handled today and what they
+          are worth, and I tell you straight whether this is a fit. Rolling monthly if you go ahead.
         </p>
-        <div className="mt-10 flex justify-center">
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Magnetic>
-            <Button size="lg" onClick={() => (window.location.href = '/book')}>
-              Book a Free Planning Call <ArrowRight className="size-4" />
-            </Button>
+            <Link href="/book" className={buttonVariants({ size: 'lg' })}>
+              Book a Walkthrough <ArrowRight className="size-4" />
+            </Link>
           </Magnetic>
+          <Link href="/demo" className={buttonVariants({ size: 'lg', variant: 'secondary' })}>
+            See the demo first
+          </Link>
         </div>
       </div>
     </section>

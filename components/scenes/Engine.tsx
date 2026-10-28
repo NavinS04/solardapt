@@ -2,17 +2,19 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useReducedMotionSafe } from '@/components/motion/MotionProvider';
 
-// The "Solardapt Engine" — the full front office, visualised (ICP §1.3).
+// The Solar Survey Engine: five stages, each removing one leak between
+// "I saw your ad" and "the surveyor's here".
 const NODES = [
-  { title: 'Exclusive Ads', detail: 'Solar-specific Meta ads run for you alone in your postcode districts.' },
-  { title: 'Conversion Funnel', detail: 'A landing funnel built to pre-sell the survey, not collect clicks.' },
-  { title: 'Live Call Answering', detail: 'Every enquiry answered in your trading name, so nothing dies in voicemail.' },
-  { title: 'Qualification', detail: 'Homeowner, roof basics and finance readiness, screened before anything is booked.' },
-  { title: 'Confirmed Survey', detail: 'Booked into your diary with confirmation call, reminders and reschedule handling.' },
-  { title: 'Your Crew Installs', detail: 'Your only job: send a surveyor. Scaffold sequenced, diary sorted.' },
+  { title: 'Capture', detail: 'Exclusive ads in your own Meta account, into an enquiry form that asks homeowner, property, roof, bill and timeframe.' },
+  { title: 'Contact', detail: 'Text and email to the homeowner within a minute, and an alert to you with their answers and score.' },
+  { title: 'Book', detail: 'Homeowners pick a survey slot from your availability. Confirmation, then reminders the day before and on the morning.' },
+  { title: 'Recover', detail: 'No-shows get a rebooking text and a callback task for your team. Anyone who replies or opts out stops instantly.' },
+  { title: 'Report', detail: 'One page a week: spend, enquiries, qualified, booked, attended, and cost per attended survey.' },
 ];
 
 export function Engine() {
@@ -25,13 +27,13 @@ export function Engine() {
       <div className="pointer-events-none absolute inset-0 mesh-bg opacity-50" aria-hidden="true" />
       <div className="container relative">
         <SectionHeading
-          eyebrow="The Solardapt Engine"
-          title="Your entire front office. One system."
-          subtitle="We run the ads, own the phones, qualify every enquiry, and hand your surveyors a full, sorted diary."
+          eyebrow="The Solar Survey Engine"
+          title="From ad to attended survey. One system."
+          subtitle="Five stages, each removing one specific leak. Nothing is added just to look bigger."
         />
 
         <div ref={ref} className="relative mt-20">
-          {/* The connecting funnel rail */}
+          {/* The connecting rail */}
           <div className="absolute left-0 right-0 top-7 hidden h-0.5 bg-white/10 lg:block">
             <motion.div
               className="h-full origin-left bg-solar-gradient"
@@ -50,7 +52,7 @@ export function Engine() {
             )}
           </div>
 
-          <ol className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
+          <ol className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {NODES.map((node, i) => (
               <motion.li
                 key={node.title}
@@ -74,6 +76,13 @@ export function Engine() {
               </motion.li>
             ))}
           </ol>
+        </div>
+
+        <div className="mt-16 flex justify-center">
+          <Link href="/demo" className="group inline-flex items-center gap-2 font-semibold text-solar-400 hover:text-solar-500">
+            Watch it handle an enquiry, live
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>

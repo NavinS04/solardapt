@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Magnetic } from '@/components/motion/Magnetic';
 import { nav } from '@/lib/site';
 import { cn } from '@/lib/utils';
@@ -54,9 +54,9 @@ export function Nav() {
 
           <div className="hidden md:block">
             <Magnetic>
-              <Button onClick={() => (window.location.href = '/book')}>
-                Book a Planning Call
-              </Button>
+              <Link href="/book" className={buttonVariants()}>
+                Book a Walkthrough
+              </Link>
             </Magnetic>
           </div>
 
@@ -105,13 +105,13 @@ export function Nav() {
                 </motion.li>
               ))}
               <motion.li variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>
-                <Button
-                  size="lg"
-                  className="mt-4 w-full"
-                  onClick={() => (window.location.href = '/book')}
+                <Link
+                  href="/book"
+                  onClick={() => setOpen(false)}
+                  className={buttonVariants({ size: 'lg', className: 'mt-4 w-full' })}
                 >
-                  Book a Planning Call
-                </Button>
+                  Book a Walkthrough
+                </Link>
               </motion.li>
             </motion.ul>
           </motion.div>

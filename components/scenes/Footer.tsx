@@ -1,19 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { Instagram, Facebook, Linkedin } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
 import { SunArc } from '@/components/ui/SunArc';
-import { Button } from '@/components/ui/button';
 import { site } from '@/lib/site';
 
+const explore = [
+  { label: 'How it works', href: '/#engine' },
+  { label: 'Live demo', href: '/demo' },
+  { label: 'Calculator', href: '/#calculator' },
+  { label: 'Founding programme', href: '/#founding' },
+  { label: 'Book a walkthrough', href: '/book' },
+];
+
 const legal = [
-  { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Cookie Policy', href: '/cookies' },
+  { label: 'Privacy notice', href: '/privacy' },
+  { label: 'Cookies', href: '/cookies' },
   { label: 'Terms', href: '/terms' },
   { label: 'Accessibility', href: '/accessibility' },
-  { label: 'Legal Notice', href: '/legal' },
+  { label: 'Company details', href: '/legal' },
 ];
 
 /** TikTok mark in the same stroke style as the lucide icons. */
@@ -42,35 +48,17 @@ const socials = [
 ];
 
 export function Footer() {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
-
-  async function subscribe(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      setStatus(res.ok ? 'done' : 'error');
-    } catch {
-      setStatus('error');
-    }
-  }
-
   return (
     <footer className="relative overflow-hidden border-t border-border bg-bg-0">
       <div className="pointer-events-none absolute inset-0 mesh-bg opacity-60" aria-hidden="true" />
       <SunArc className="absolute left-1/2 top-0 -translate-x-1/2" />
 
-      <div className="container relative grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.5fr]">
+      <div className="container relative grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            Your entire front office. We run the ads, answer your phones live, qualify every
-            enquiry and hand your surveyors a full, sorted diary.
+            The Solar Survey Engine for established UK solar installers. From ad to attended
+            survey, in your name.
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
             <a href={`mailto:${site.email}`} className="hover:text-foreground">
@@ -103,10 +91,14 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold">Markets</h3>
+          <h3 className="text-sm font-semibold">Explore</h3>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            {['UK', 'USA', 'Australia', 'Middle East'].map((m) => (
-              <li key={m}>{m}</li>
+            {explore.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="hover:text-foreground">
+                  {l.label}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -123,46 +115,16 @@ export function Footer() {
             ))}
           </ul>
         </div>
-
-        <div>
-          <h3 className="text-sm font-semibold">One idea a week that fills diaries</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Short, practical notes on winning exclusive, sat surveys. Written for installers, not
-            marketers.
-          </p>
-          <form className="mt-4 flex flex-col gap-3" onSubmit={subscribe}>
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@yourcompany.com"
-              className="h-11 rounded-full border border-input bg-bg-surface px-4 text-sm outline-none focus:border-solar-500"
-            />
-            <Button type="submit" variant="secondary" disabled={status === 'sending'}>
-              {status === 'done'
-                ? 'Check your inbox to confirm'
-                : status === 'sending'
-                  ? 'Sending…'
-                  : 'Get the weekly note'}
-            </Button>
-            {status === 'error' && (
-              <p className="text-xs text-error">Something went wrong. Please try again.</p>
-            )}
-            <p className="text-xs text-muted-foreground">No spam. Unsubscribe anytime.</p>
-          </form>
-        </div>
       </div>
 
       <div className="container relative flex flex-col items-center justify-between gap-4 border-t border-border py-6 text-xs text-muted-foreground md:flex-row">
         <p>
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © {new Date().getFullYear()} {site.legal.name || site.name}
+          {site.legal.companyNumber &&
+            `. Registered in ${site.legal.registeredIn}, company number ${site.legal.companyNumber}`}
+          {site.legal.address && `. Registered office: ${site.legal.address}`}.
         </p>
-        <p>Postcode exclusive · UK · USA · Australia · Middle East</p>
+        <p>Serving solar installers in the United Kingdom only</p>
       </div>
     </footer>
   );
