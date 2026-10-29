@@ -7,6 +7,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 import { EXAMPLE_CHANGES, EXAMPLE_REPORT, exampleCostPerAttended } from '@/lib/example-report';
+import { QUALIFY_AT, QUESTIONS, type QuestionKey } from '@/lib/qualify';
 
 /*
  * Solar Survey Engine demo. Entirely client-side: nothing is sent anywhere.
@@ -16,37 +17,6 @@ import { EXAMPLE_CHANGES, EXAMPLE_REPORT, exampleCostPerAttended } from '@/lib/e
  * into a fresh demo.
  */
 const INSTALLER = 'Brightfield Solar';
-const QUALIFY_AT = 55;
-
-type QuestionKey = 'type' | 'roof' | 'bill' | 'when';
-interface Question { key: QuestionKey; title: string; sub: string; opts: [label: string, points: number][] }
-
-const QUESTIONS: Question[] = [
-  {
-    key: 'type',
-    title: 'What type of property is it?',
-    sub: 'Helps us plan the survey.',
-    opts: [['Detached', 20], ['Semi-detached', 20], ['Terraced', 15], ['Bungalow', 20], ['Flat or maisonette', 0]],
-  },
-  {
-    key: 'roof',
-    title: 'Which way does the main roof face?',
-    sub: 'Not sure is fine, the surveyor checks.',
-    opts: [['South', 25], ['East or west', 20], ['North', 5], ['Not sure', 12]],
-  },
-  {
-    key: 'bill',
-    title: 'Roughly what’s your monthly electricity bill?',
-    sub: 'A ballpark is plenty.',
-    opts: [['Over £150', 25], ['£75 to £150', 18], ['Under £75', 8]],
-  },
-  {
-    key: 'when',
-    title: 'When are you hoping to install?',
-    sub: 'No pressure either way.',
-    opts: [['As soon as possible', 30], ['In 1 to 3 months', 25], ['In 3 to 6 months', 15], ['Just researching', 5]],
-  },
-];
 
 type Kind = '' | 'ok' | 'bad';
 type StageKey = 'new' | 'qualified' | 'booked' | 'attended' | 'filtered';

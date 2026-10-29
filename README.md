@@ -45,18 +45,48 @@ Environment Variables, then redeploy. See `docs/RUNBOOK.md` for the Make scenari
 | `lint` | ESLint (next) |
 | `test` / `test:watch` | Vitest |
 | `format` | Prettier |
+| `cli` | The Solardapt CLI (below) |
+
+## CLI
+
+One command line for every program in the repo. It loads `.env.local` and `.env` the
+way Next does, and runs the same `lib/` code and route handlers the site runs.
+
+```bash
+npm run -s cli                       # list commands (-s hides npm's banner, so --json pipes cleanly)
+npm run -s cli -- calc --enquiries 60 --slow 50 --install-rate 12 --profit 3000
+npm run -s cli -- qualify --list     # the demo's points table
+npm run -s cli -- qualify --type semi --roof south --bill 1 --when soon
+npm run -s cli -- report             # example weekly report
+npm run -s cli -- faqs gdpr          # list or search FAQs
+npm run -s cli -- site               # config + which env vars are set (values hidden)
+npm run -s cli -- routes             # sitemap + robots
+npm run -s cli -- lead validate --name "Jane Doe" --email jane@example.com --phone "+44 7700 900000"
+npm run -s cli -- lead send   ...    --yes   # POST straight to the Make webhook
+npm run -s cli -- api health  [--url https://solardapt.com]
+npm run -s cli -- api lead    ...    [--url ...] --yes
+npm run -s cli -- check [--build]    # type-check, lint, test (the CI steps)
+```
+
+- Add `--json` to any command for machine-readable output, and `--help` for its options.
+- `api` calls the real route handlers in-process; with `--url` it calls a running site.
+- Enquiry fields come from flags, `--file lead.json` or `--stdin` (JSON), with flags
+  winning. `--utm source=linkedin` is repeatable.
+- Anything that could reach Make (`lead send`, `api lead`) is a dry run without `--yes`.
+- Exit codes: `0` ok, `1` failed (invalid enquiry, non-2xx, failing check), `2` usage error.
 
 ## Structure
 
 ```
 app/(marketing)    homepage, /demo, /book, /thank-you, legal pages
 app/api            lead (enquiry → Make), health
+cli                the Solardapt CLI (npm run cli)
 components/demo    SurveyDemo: the interactive Solar Survey Engine demo
 components/scenes  homepage sections
 components/motion  MotionProvider, Reveal, Magnetic, Tilt, Counter
 components/ui      buttons, logo, headings, primitives
-lib                site config, faqs, calculator, example report, validators, lead-forward
-tests              unit tests (calculator, validators, lead-forward)
+lib                site config, faqs, calculator, qualify, example report, validators, lead-forward
+tests              unit tests (calculator, qualify, validators, lead-forward, cli)
 docs               RUNBOOK, MOTION
 ```
 
