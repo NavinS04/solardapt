@@ -8,6 +8,7 @@ import { Calculator } from '@/components/scenes/Calculator';
 import { WhyCards } from '@/components/scenes/WhyCards';
 import { Services } from '@/components/scenes/Services';
 import { SocialProof } from '@/components/scenes/SocialProof';
+import { Approach } from '@/components/scenes/Approach';
 import { Founding } from '@/components/scenes/Founding';
 import { Faq } from '@/components/scenes/Faq';
 import { FinalCta } from '@/components/scenes/FinalCta';
@@ -26,6 +27,7 @@ export default function HomePage() {
       <Calculator />
       <WhyCards />
       <SocialProof />
+      <Approach />
       <Services />
       <Founding />
       <Faq />
