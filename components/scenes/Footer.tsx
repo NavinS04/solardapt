@@ -8,7 +8,7 @@ import { site } from '@/lib/site';
 
 const explore = [
   { label: 'How it works', href: '/#engine' },
-  { label: 'Live demo', href: '/demo' },
+  { label: 'Live demos', href: '/demo' },
   { label: 'Calculator', href: '/#calculator' },
   { label: 'Founding programme', href: '/#founding' },
   { label: 'Book a walkthrough', href: '/book' },
