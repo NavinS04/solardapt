@@ -10,7 +10,7 @@ export const site = {
   description:
     'Solardapt builds and runs the Solar Survey Engine for established UK solar installers. Every enquiry gets a reply within a minute, is qualified, books its own survey and is reminded until it turns up. One installer per postcode district, rolling monthly.',
   email: 'navinsonsana@solardapt.com',
-  phone: '+44 7427 845540',
+  phone: '+44 121 227 9872',
   founder: 'Navin Sonsana',
   markets: ['UK'],
   social: {
