@@ -119,7 +119,10 @@ export function Footer() {
 
       <div className="container relative flex flex-col items-center justify-between gap-4 border-t border-border py-6 text-xs text-muted-foreground md:flex-row">
         <p>
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © {new Date().getFullYear()} {site.legal.name || site.name}
+          {site.legal.companyNumber &&
+            `. Registered in ${site.legal.registeredIn}, company number ${site.legal.companyNumber}`}
+          {site.legal.address && `. Registered office: ${site.legal.address}`}.
         </p>
         <p>Serving solar installers in the United Kingdom only</p>
       </div>

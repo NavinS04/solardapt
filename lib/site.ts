@@ -28,6 +28,8 @@ export const site = {
     name: process.env.NEXT_PUBLIC_LEGAL_NAME ?? '',
     address: process.env.NEXT_PUBLIC_LEGAL_ADDRESS ?? '',
     companyNumber: process.env.NEXT_PUBLIC_COMPANY_NUMBER ?? '',
+    // Required on a UK company's website alongside the number and registered office.
+    registeredIn: 'England and Wales',
     icoNumber: process.env.NEXT_PUBLIC_ICO_NUMBER ?? '',
   },
 } as const;

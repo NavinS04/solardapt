@@ -46,7 +46,11 @@ export function Services() {
   return (
     <section className="relative overflow-hidden bg-bg-1 py-28">
       <div className="container">
-        <SectionHeading eyebrow="Getting started" title="From yes to live in about 14 days." />
+        <SectionHeading
+          eyebrow="Working together"
+          title="From yes to live in about 14 days."
+          subtitle="What working with me looks like, step by step. Choose a step to see what happens and what I need from you."
+        />
 
         <div className="mx-auto mt-16 max-w-4xl">
           {/* Timeline rail */}
