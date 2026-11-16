@@ -5,19 +5,20 @@ import { site } from '@/lib/site';
 export const metadata: Metadata = { title: 'Privacy Notice' };
 
 const PROCESSORS = [
-  ['Microsoft (Microsoft 365, Outlook)', 'Email, documents, records'],
+  ['Microsoft (Microsoft 365, Outlook)', 'Email, documents, records, and transcripts of calls you agreed to have recorded'],
   ['Google (Google Drive)', 'File storage'],
   ['Vercel and Cloudflare', 'Website hosting, domain and security'],
   ['Cal.com', 'Call and survey booking'],
   ['Make.com', 'Moving data between our systems (automation), including enquiries sent from this website'],
-  ['Twilio', 'Text messages'],
+  ['Twilio', 'Text messages and phone calls, including recordings of calls you agreed to have recorded'],
   ['Brevo', 'Transactional email'],
+  ['Anthropic (Claude)', 'Reviewing transcripts of calls you agreed to have recorded'],
 ];
 
 export default function Privacy() {
   const { legal } = site;
   return (
-    <LegalPage title="Privacy Notice" updated="27 October 2026">
+    <LegalPage title="Privacy Notice" updated="16 November 2026">
       <h2>Who we are</h2>
       <p>
         {legal.name ? (
@@ -48,6 +49,14 @@ export default function Privacy() {
             <td>People who contact us or book a call</td>
             <td>Name, business, email, phone, what you tell us</td>
             <td>To reply, hold the call and follow up as you asked. Legitimate interests, or steps before a contract.</td>
+          </tr>
+          <tr>
+            <td>People on a call we’ve asked to record</td>
+            <td>The recording and a written transcript of the call</td>
+            <td>
+              To review and improve how we run our calls. Consent, which you can withdraw at any time. We only record
+              if you agree at the start of the call.
+            </td>
           </tr>
           <tr>
             <td>Business contacts at UK solar installers we research</td>
@@ -117,6 +126,7 @@ export default function Privacy() {
         <li>Business contacts we’ve researched but who haven’t engaged: reviewed at 90 days and deleted if no longer needed.</li>
         <li>If you ask us not to contact you, we keep a minimal record (name, business, contact detail and date) only so we never contact you again.</li>
         <li>Client records: for the contract, then as long as tax and accounting law requires.</li>
+        <li>Call recordings: deleted once reviewed, within 30 days. Transcripts and notes on them: up to 24 months from our last contact, or sooner if you ask.</li>
         <li>Homeowner enquiry data: as the installer instructs in our data processing agreement, then deleted or returned.</li>
       </ul>
 
